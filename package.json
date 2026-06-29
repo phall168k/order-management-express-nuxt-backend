@@ -8,7 +8,10 @@
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "seed": "ts-node src/database/seed.ts"
+    "db:drop": "ts-node src/database/drop.ts",
+    "migrate": "ts-node src/database/migrate.ts",
+    "seed": "ts-node src/database/seeds/main.seed.ts",
+    "seed:fresh": "npm run db:drop && npm run migrate && npm run seed"
   },
   "repository": {
     "type": "git",
