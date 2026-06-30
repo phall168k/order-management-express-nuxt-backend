@@ -13,7 +13,7 @@ router.use(authMiddleware);
 
 /**
  * @swagger
- * /categories:
+ * /master-data/categories:
  *   get:
  *     summary: Get categories with pagination
  *     tags: [Categories]
@@ -77,7 +77,7 @@ router.get(
 
 /**
  * @swagger
- * /categories/{id}:
+ * /master-data/categories/{id}:
  *   get:
  *     summary: Get a category by id
  *     tags: [Categories]

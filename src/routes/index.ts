@@ -13,6 +13,6 @@ router.use('/permissions', permissionRoutes);
 router.use('/roles', roleRoutes);
 router.use('/users', userRoutes);
 router.use('/minio', minioRoutes);
-router.use('/categories', categoryRoutes);
+router.use('/master-data/categories', categoryRoutes);
 
 export default router;
