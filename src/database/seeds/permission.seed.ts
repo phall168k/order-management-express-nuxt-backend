@@ -18,6 +18,10 @@ export const permissionNames = [
     "category.read",
     "category.update",
     "category.delete",
+    "product.create",
+    "product.read",
+    "product.update",
+    "product.delete",
 ];
 
 export const seedPermissions = async () => {

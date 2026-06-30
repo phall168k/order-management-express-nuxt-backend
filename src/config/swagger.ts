@@ -373,6 +373,109 @@ export const swaggerSpec = swaggerJsdoc({
                         },
                     },
                 },
+                Product: {
+                    type: "object",
+                    properties: {
+                        _id: {
+                            type: "string",
+                            example: "65f1a9f2c1a3a7d9f3b88888",
+                        },
+                        code: {
+                            type: "string",
+                            example: "PROD-001",
+                        },
+                        nameEn: {
+                            type: "string",
+                            example: "Sample Product",
+                        },
+                        nameKh: {
+                            type: "string",
+                            example: "Sample Product KH",
+                        },
+                        unitPrice: {
+                            type: "number",
+                            example: 12.5,
+                        },
+                        description: {
+                            type: "string",
+                            example: "Sample product description",
+                        },
+                        thumbnail: {
+                            type: "string",
+                            example: "uploads/products/sample-product.jpg",
+                        },
+                        createdByUser: {
+                            $ref: "#/components/schemas/User",
+                        },
+                        createdAt: {
+                            type: "string",
+                            format: "date-time",
+                        },
+                        updatedAt: {
+                            type: "string",
+                            format: "date-time",
+                        },
+                    },
+                },
+                CreateProductRequest: {
+                    type: "object",
+                    required: ["code", "nameEn", "nameKh", "unitPrice", "thumbnail"],
+                    properties: {
+                        code: {
+                            type: "string",
+                            example: "PROD-001",
+                        },
+                        nameEn: {
+                            type: "string",
+                            example: "Sample Product",
+                        },
+                        nameKh: {
+                            type: "string",
+                            example: "Sample Product KH",
+                        },
+                        unitPrice: {
+                            type: "number",
+                            example: 12.5,
+                        },
+                        description: {
+                            type: "string",
+                            example: "Sample product description",
+                        },
+                        thumbnail: {
+                            type: "string",
+                            example: "uploads/products/sample-product.jpg",
+                        },
+                    },
+                },
+                UpdateProductRequest: {
+                    type: "object",
+                    properties: {
+                        code: {
+                            type: "string",
+                            example: "PROD-002",
+                        },
+                        nameEn: {
+                            type: "string",
+                            example: "Updated Product",
+                        },
+                        nameKh: {
+                            type: "string",
+                            example: "Updated Product KH",
+                        },
+                        unitPrice: {
+                            type: "number",
+                            example: 15,
+                        },
+                        description: {
+                            type: "string",
+                            example: "Updated product description",
+                        },
+                        thumbnail: {
+                            type: "string",
+                            example: "uploads/products/updated-product.jpg",
+                        },
+                    },
+                },
                 PaginationMeta: {
                     type: "object",
                     properties: {
