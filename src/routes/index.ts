@@ -4,6 +4,7 @@ import permissionRoutes from '../modules/admin/system/permissoin/permission.rout
 import roleRoutes from '../modules/admin/system/role/role.route';
 import userRoutes from '../modules/admin/system/user/user.route';
 import minioRoutes from '../minio/minio.route';
+import categoryRoutes from '../modules/admin/master-data/category/category.route';
 
 const router = Router();
 
@@ -12,5 +13,6 @@ router.use('/permissions', permissionRoutes);
 router.use('/roles', roleRoutes);
 router.use('/users', userRoutes);
 router.use('/minio', minioRoutes);
+router.use('/categories', categoryRoutes);
 
 export default router;

@@ -294,6 +294,85 @@ export const swaggerSpec = swaggerJsdoc({
                         },
                     },
                 },
+                Category: {
+                    type: "object",
+                    properties: {
+                        _id: {
+                            type: "string",
+                            example: "65f1a9f2c1a3a7d9f3b77777",
+                        },
+                        code: {
+                            type: "string",
+                            example: "FOOD",
+                        },
+                        nameEn: {
+                            type: "string",
+                            example: "Food",
+                        },
+                        nameKh: {
+                            type: "string",
+                            example: "Food KH",
+                        },
+                        description: {
+                            type: "string",
+                            example: "Food products",
+                        },
+                        createdByUser: {
+                            $ref: "#/components/schemas/User",
+                        },
+                        createdAt: {
+                            type: "string",
+                            format: "date-time",
+                        },
+                        updatedAt: {
+                            type: "string",
+                            format: "date-time",
+                        },
+                    },
+                },
+                CreateCategoryRequest: {
+                    type: "object",
+                    required: ["code", "nameEn", "nameKh"],
+                    properties: {
+                        code: {
+                            type: "string",
+                            example: "FOOD",
+                        },
+                        nameEn: {
+                            type: "string",
+                            example: "Food",
+                        },
+                        nameKh: {
+                            type: "string",
+                            example: "Food KH",
+                        },
+                        description: {
+                            type: "string",
+                            example: "Food products",
+                        },
+                    },
+                },
+                UpdateCategoryRequest: {
+                    type: "object",
+                    properties: {
+                        code: {
+                            type: "string",
+                            example: "DRINK",
+                        },
+                        nameEn: {
+                            type: "string",
+                            example: "Drink",
+                        },
+                        nameKh: {
+                            type: "string",
+                            example: "Drink KH",
+                        },
+                        description: {
+                            type: "string",
+                            example: "Drink products",
+                        },
+                    },
+                },
                 PaginationMeta: {
                     type: "object",
                     properties: {

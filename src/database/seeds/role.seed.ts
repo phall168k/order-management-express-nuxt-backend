@@ -15,6 +15,10 @@ const roleSeeds = [
             "user.create",
             "user.read",
             "user.update",
+            "category.create",
+            "category.read",
+            "category.update",
+            "category.delete",
         ],
     },
     {
@@ -23,6 +27,7 @@ const roleSeeds = [
             "permission.read",
             "role.read",
             "user.read",
+            "category.read",
         ],
     },
 ];

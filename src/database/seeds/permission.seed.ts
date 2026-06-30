@@ -14,6 +14,10 @@ export const permissionNames = [
     "user.read",
     "user.update",
     "user.delete",
+    "category.create",
+    "category.read",
+    "category.update",
+    "category.delete",
 ];
 
 export const seedPermissions = async () => {
