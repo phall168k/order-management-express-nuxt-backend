@@ -41,6 +41,16 @@ export const roleController = {
         });
     },
 
+    async findSelectOptions(_req: Request, res: Response) {
+        const roles = await roleService.findSelectOptions();
+
+        return res.status(200).json({
+            success: true,
+            message: "Role select options fetched successfully",
+            data: roles,
+        });
+    },
+
     async update(req: Request<{ id: string }, object, UpdateRoleRequestDto>, res: Response) {
         const role = await roleService.update(getIdParam(req), req.body);
 

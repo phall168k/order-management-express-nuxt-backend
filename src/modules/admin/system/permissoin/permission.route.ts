@@ -12,7 +12,7 @@ router.use(authMiddleware);
 
 /**
  * @swagger
- * /permissions:
+ * /system/permissions:
  *   get:
  *     summary: Get permissions with pagination
  *     tags: [Permissions]
@@ -79,7 +79,7 @@ router
 
 /**
  * @swagger
- * /permissions/{id}:
+ * /system/permissions/{id}:
  *   get:
  *     summary: Get a permission by id
  *     tags: [Permissions]

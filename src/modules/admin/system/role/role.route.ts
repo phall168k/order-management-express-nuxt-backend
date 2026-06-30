@@ -13,7 +13,7 @@ router.use(authMiddleware);
 
 /**
  * @swagger
- * /roles:
+ * /system/roles:
  *   get:
  *     summary: Get roles with pagination
  *     tags: [Roles]
@@ -80,7 +80,24 @@ router
 
 /**
  * @swagger
- * /roles/{id}:
+ * /system/roles/select-options:
+ *   get:
+ *     summary: Get role select options
+ *     tags: [Roles]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Role select options fetched successfully
+ */
+router.get(
+    "/select-options",
+    roleController.findSelectOptions,
+);
+
+/**
+ * @swagger
+ * /system/roles/{id}:
  *   get:
  *     summary: Get a role by id
  *     tags: [Roles]

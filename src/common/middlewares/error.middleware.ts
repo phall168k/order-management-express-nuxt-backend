@@ -111,7 +111,7 @@ export const errorMiddleware: ErrorRequestHandler = (
     const { statusCode, message, errors } = getErrorResponse(error);
 
     return res.status(statusCode).json({
-        status: statusCode,
+        statusCode: statusCode,
         success: false,
         message,
         ...(errors ? { errors } : {}),

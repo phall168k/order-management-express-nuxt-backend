@@ -76,6 +76,15 @@ export const roleService = {
         return role;
     },
 
+    async findSelectOptions() {
+        const roles = await roleRepository.findSelectOptions();
+
+        return roles.map((role) => ({
+            id: role._id.toString(),
+            name: role.name,
+        }));
+    },
+
     async update(id: string, data: UpdateRoleRequestDto) {
         const updateData: UpdateRoleRequestDto = {};
 

@@ -10,9 +10,9 @@ import productRoutes from '../modules/admin/master-data/product/product.route';
 const router = Router();
 
 router.use('/auth/login', loginRoutes);
-router.use('/permissions', permissionRoutes);
-router.use('/roles', roleRoutes);
-router.use('/users', userRoutes);
+router.use('/system/permissions', permissionRoutes);
+router.use('/system/roles', roleRoutes);
+router.use('/system/users', userRoutes);
 router.use('/minio', minioRoutes);
 router.use('/master-data/categories', categoryRoutes);
 router.use('/master-data/products', productRoutes);

@@ -13,7 +13,7 @@ router.use(authMiddleware);
 
 /**
  * @swagger
- * /users:
+ * /system/users:
  *   get:
  *     summary: Get users with pagination
  *     tags: [Users]
@@ -80,7 +80,7 @@ router
 
 /**
  * @swagger
- * /users/{id}:
+ * /system/users/{id}:
  *   get:
  *     summary: Get a user by id
  *     tags: [Users]

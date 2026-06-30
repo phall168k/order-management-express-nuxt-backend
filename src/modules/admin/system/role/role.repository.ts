@@ -47,6 +47,13 @@ export const roleRepository = {
         return { data, total };
     },
 
+    findSelectOptions() {
+        return RoleModel.find()
+            .select("_id name")
+            .sort({ name: 1 })
+            .lean();
+    },
+
     update(id: string, data: UpdateRoleRequestDto) {
         if (!Types.ObjectId.isValid(id)) {
             return null;
