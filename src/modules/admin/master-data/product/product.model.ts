@@ -6,6 +6,7 @@ export interface ProductDocument extends Document {
     nameEn: string;
     nameKh: string;
     unitPrice: number;
+    discount: number;
     description?: string;
     thumbnail?: string;
     createdByUser: Types.ObjectId;
@@ -53,6 +54,14 @@ const productSchema = new Schema<ProductDocument>(
                 "Product unit price must be greater than or equal to 0",
             ],
         },
+        discount: {
+            type: Number,
+            default: 0,
+            min: [
+                0,
+                "Product discount must be greater than or equal to 0",
+            ],
+        },
         description: {
             type: String,
             trim: true,
@@ -85,6 +94,12 @@ const productSchema = new Schema<ProductDocument>(
         toObject: { virtuals: true },
     },
 );
+
+productSchema.pre("validate", function validateDiscount() {
+    if (this.discount > this.unitPrice) {
+        this.invalidate("discount", "Product discount must not be greater than unit price");
+    }
+});
 
 productSchema.virtual("stock", {
     ref: "Stock",

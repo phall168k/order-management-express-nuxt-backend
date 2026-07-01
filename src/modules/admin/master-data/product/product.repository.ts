@@ -84,7 +84,7 @@ export const productRepository = {
 
     findSelectOptions() {
         return ProductModel.find()
-            .select("_id code nameEn nameKh unitPrice thumbnail")
+            .select("_id code nameEn nameKh unitPrice discount thumbnail")
             .populate(populateStock)
             .sort({ code: 1 })
             .lean();

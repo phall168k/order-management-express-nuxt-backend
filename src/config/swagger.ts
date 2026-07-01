@@ -575,6 +575,10 @@ export const swaggerSpec = swaggerJsdoc({
                             type: "number",
                             example: 12.5,
                         },
+                        discount: {
+                            type: "number",
+                            example: 1.5,
+                        },
                         description: {
                             type: "string",
                             example: "Sample product description",
@@ -619,6 +623,10 @@ export const swaggerSpec = swaggerJsdoc({
                             type: "number",
                             example: 12.5,
                         },
+                        discount: {
+                            type: "number",
+                            example: 1.5,
+                        },
                         description: {
                             type: "string",
                             example: "Sample product description",
@@ -651,6 +659,10 @@ export const swaggerSpec = swaggerJsdoc({
                         unitPrice: {
                             type: "number",
                             example: 15,
+                        },
+                        discount: {
+                            type: "number",
+                            example: 2,
                         },
                         description: {
                             type: "string",

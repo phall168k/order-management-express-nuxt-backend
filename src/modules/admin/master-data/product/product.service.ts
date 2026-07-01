@@ -39,12 +39,19 @@ const validateCategory = async (categoryId: string) => {
     }
 };
 
+const validateDiscount = (discount: number, unitPrice: number) => {
+    if (discount > unitPrice) {
+        throw new HttpException(400, "Product discount must not be greater than unit price");
+    }
+};
+
 export const productService = {
     async create(data: CreateProductRequestDto, createdByUser: string) {
         await validateCreatedByUser(createdByUser);
 
         const code = normalizeString(data.code);
         const category = normalizeString(data.category);
+        const discount = data.discount ?? 0;
         const existingProduct = await productRepository.findByCode(code);
 
         if (existingProduct) {
@@ -52,12 +59,14 @@ export const productService = {
         }
 
         await validateCategory(category);
+        validateDiscount(discount, data.unitPrice);
 
         return productRepository.create({
             code,
             nameEn: normalizeString(data.nameEn),
             nameKh: normalizeString(data.nameKh),
             unitPrice: data.unitPrice,
+            discount,
             description: normalizeOptionalString(data.description),
             thumbnail: normalizeString(data.thumbnail),
             category,
@@ -91,6 +100,7 @@ export const productService = {
             nameEn: product.nameEn,
             nameKh: product.nameKh,
             unitPrice: product.unitPrice,
+            discount: product.discount,
             thumbnail: product.thumbnail,
             stock: product.stock ?? null,
         }));
@@ -98,6 +108,14 @@ export const productService = {
 
     async update(id: string, data: UpdateProductRequestDto) {
         const updateData: UpdateProductRequestDto = {};
+        const shouldValidateDiscount = data.unitPrice !== undefined || data.discount !== undefined;
+        const existingProduct = shouldValidateDiscount
+            ? await productRepository.findById(id)
+            : null;
+
+        if (shouldValidateDiscount && !existingProduct) {
+            throw new HttpException(404, "Product not found");
+        }
 
         if (data.code !== undefined) {
             const code = normalizeString(data.code);
@@ -122,6 +140,10 @@ export const productService = {
             updateData.unitPrice = data.unitPrice;
         }
 
+        if (data.discount !== undefined) {
+            updateData.discount = data.discount;
+        }
+
         if (data.description !== undefined) {
             updateData.description = normalizeOptionalString(data.description);
         }
@@ -134,6 +156,13 @@ export const productService = {
             const category = normalizeString(data.category);
             await validateCategory(category);
             updateData.category = category;
+        }
+
+        if (existingProduct) {
+            validateDiscount(
+                updateData.discount ?? existingProduct.discount,
+                updateData.unitPrice ?? existingProduct.unitPrice,
+            );
         }
 
         const product = await productRepository.update(id, updateData);

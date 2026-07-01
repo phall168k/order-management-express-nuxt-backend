@@ -34,6 +34,10 @@ export const validateCreateProduct = (
         return next(new HttpException(400, "Product unit price must be a non-negative number"));
     }
 
+    if (req.body.discount !== undefined && !isNonNegativeNumber(req.body.discount)) {
+        return next(new HttpException(400, "Product discount must be a non-negative number"));
+    }
+
     if (!isOptionalString(req.body.description)) {
         return next(new HttpException(400, "Product description must be a string"));
     }
@@ -68,6 +72,10 @@ export const validateUpdateProduct = (
 
     if (req.body.unitPrice !== undefined && !isNonNegativeNumber(req.body.unitPrice)) {
         return next(new HttpException(400, "Product unit price must be a non-negative number"));
+    }
+
+    if (req.body.discount !== undefined && !isNonNegativeNumber(req.body.discount)) {
+        return next(new HttpException(400, "Product discount must be a non-negative number"));
     }
 
     if (!isOptionalString(req.body.description)) {
