@@ -31,6 +31,10 @@ const roleSeeds = [
             "stock.read",
             "stock.update",
             "stock.delete",
+            "stock-in.create",
+            "stock-in.read",
+            "stock-in.update",
+            "stock-in.delete",
         ],
     },
     {
@@ -43,6 +47,7 @@ const roleSeeds = [
             "category.read",
             "product.read",
             "stock.read",
+            "stock-in.read",
         ],
     },
 ];

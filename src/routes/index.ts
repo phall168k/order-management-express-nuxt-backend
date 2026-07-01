@@ -8,6 +8,7 @@ import minioRoutes from '../minio/minio.route';
 import categoryRoutes from '../modules/admin/master-data/category/category.route';
 import productRoutes from '../modules/admin/master-data/product/product.route';
 import stockRoutes from '../modules/admin/inventory/stock/stock.route';
+import stockInRoutes from '../modules/admin/inventory/stock-in/stock-in.route';
 
 const router = Router();
 
@@ -20,5 +21,6 @@ router.use('/minio', minioRoutes);
 router.use('/master-data/categories', categoryRoutes);
 router.use('/master-data/products', productRoutes);
 router.use('/inventory/stocks', stockRoutes);
+router.use('/inventory/stock-ins', stockInRoutes);
 
 export default router;

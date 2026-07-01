@@ -801,6 +801,113 @@ export const swaggerSpec = swaggerJsdoc({
                         },
                     },
                 },
+                StockIn: {
+                    type: "object",
+                    properties: {
+                        _id: {
+                            type: "string",
+                            example: "65f1a9f2c1a3a7d9f3b99991",
+                        },
+                        code: {
+                            type: "string",
+                            example: "ST2600001",
+                        },
+                        stockInDate: {
+                            type: "string",
+                            format: "date",
+                            example: "2026-07-01",
+                        },
+                        product: {
+                            $ref: "#/components/schemas/Product",
+                        },
+                        quantity: {
+                            type: "number",
+                            example: 10,
+                        },
+                        note: {
+                            type: "string",
+                            example: "Initial stock in",
+                        },
+                        createdByUser: {
+                            $ref: "#/components/schemas/User",
+                        },
+                        createdAt: {
+                            type: "string",
+                            format: "date-time",
+                        },
+                        updatedAt: {
+                            type: "string",
+                            format: "date-time",
+                        },
+                    },
+                },
+                CreateStockInItemRequest: {
+                    type: "object",
+                    required: ["stockInDate", "product", "quantity"],
+                    properties: {
+                        stockInDate: {
+                            type: "string",
+                            format: "date",
+                            example: "2026-07-01",
+                        },
+                        product: {
+                            type: "string",
+                            example: "65f1a9f2c1a3a7d9f3b88888",
+                        },
+                        quantity: {
+                            type: "number",
+                            example: 10,
+                        },
+                        note: {
+                            type: "string",
+                            example: "Initial stock in",
+                        },
+                    },
+                },
+                CreateStockInRequest: {
+                    oneOf: [
+                        {
+                            type: "array",
+                            items: {
+                                $ref: "#/components/schemas/CreateStockInItemRequest",
+                            },
+                        },
+                        {
+                            type: "object",
+                            required: ["items"],
+                            properties: {
+                                items: {
+                                    type: "array",
+                                    items: {
+                                        $ref: "#/components/schemas/CreateStockInItemRequest",
+                                    },
+                                },
+                            },
+                        },
+                    ],
+                },
+                UpdateStockInRequest: {
+                    type: "object",
+                    properties: {
+                        stockInDate: {
+                            type: "string",
+                            format: "date",
+                            example: "2026-07-02",
+                        },
+                        product: {
+                            type: "string",
+                            example: "65f1a9f2c1a3a7d9f3b88888",
+                        },
+                        quantity: {
+                            type: "number",
+                            example: 15,
+                        },
+                        note: {
+                            type: "string",
+                            example: "Updated stock in note",
+                        },
+                    },
+                },
             },
         },
     },
