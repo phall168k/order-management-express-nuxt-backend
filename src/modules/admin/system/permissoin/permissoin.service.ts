@@ -35,6 +35,10 @@ export const permissionService = {
         return permission;
     },
 
+    async findSelectOptions() {
+        return permissionRepository.findSelectOptions();
+    },
+
     async update(id: string, data: UpdatePermissionRequestDto) {
         const updateData: UpdatePermissionRequestDto = {};
 

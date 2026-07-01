@@ -41,6 +41,16 @@ export const permissionController = {
         });
     },
 
+    async findSelectOptions(_req: Request, res: Response) {
+        const permissions = await permissionService.findSelectOptions();
+
+        return res.status(200).json({
+            success: true,
+            message: "Permission select options fetched successfully",
+            data: permissions,
+        });
+    },
+
     async update(req: Request<{ id: string }, object, UpdatePermissionRequestDto>, res: Response) {
         const permission = await permissionService.update(getIdParam(req), req.body);
 

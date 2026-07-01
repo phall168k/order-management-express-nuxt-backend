@@ -46,6 +46,13 @@ export const permissionRepository = {
         return { data, total };
     },
 
+    findSelectOptions() {
+        return PermissionModel.find()
+            .select("_id name")
+            .sort({ name: 1 })
+            .lean();
+    },
+
     update(id: string, data: UpdatePermissionRequestDto) {
         if (!Types.ObjectId.isValid(id)) {
             return null;

@@ -79,6 +79,23 @@ router
 
 /**
  * @swagger
+ * /system/permissions/select-options:
+ *   get:
+ *     summary: Get permission select options
+ *     tags: [Permissions]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Permission select options fetched successfully
+ */
+router.get(
+    "/select-options",
+    permissionController.findSelectOptions,
+);
+
+/**
+ * @swagger
  * /system/permissions/{id}:
  *   get:
  *     summary: Get a permission by id
