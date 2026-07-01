@@ -3,6 +3,7 @@ export interface CreateUserRequestDto {
     email: string;
     password: string;
     roles?: string[];
+    userProfile?: string;
     isSuperUser?: boolean;
     isActive?: boolean;
 }

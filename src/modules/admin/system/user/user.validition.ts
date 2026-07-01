@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { Types } from "mongoose";
 import { HttpException } from "../../../../common/exceptions/http.exception";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -12,6 +13,10 @@ const isStringArray = (value: unknown): value is string[] => (
 );
 
 const isBoolean = (value: unknown): value is boolean => typeof value === "boolean";
+
+const isOptionalObjectId = (value: unknown) => (
+    value === undefined || (typeof value === "string" && Types.ObjectId.isValid(value.trim()))
+);
 
 export const validateCreateUser = (
     req: Request,
@@ -32,6 +37,10 @@ export const validateCreateUser = (
 
     if (req.body.roles !== undefined && !isStringArray(req.body.roles)) {
         return next(new HttpException(400, "Roles must be an array of role ids"));
+    }
+
+    if (!isOptionalObjectId(req.body.userProfile)) {
+        return next(new HttpException(400, "User profile must be a valid user profile id"));
     }
 
     if (req.body.isSuperUser !== undefined && !isBoolean(req.body.isSuperUser)) {
@@ -70,6 +79,10 @@ export const validateUpdateUser = (
 
     if (req.body.roles !== undefined && !isStringArray(req.body.roles)) {
         return next(new HttpException(400, "Roles must be an array of role ids"));
+    }
+
+    if (!isOptionalObjectId(req.body.userProfile)) {
+        return next(new HttpException(400, "User profile must be a valid user profile id"));
     }
 
     if (req.body.isSuperUser !== undefined && !isBoolean(req.body.isSuperUser)) {

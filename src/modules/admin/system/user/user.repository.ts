@@ -21,7 +21,7 @@ export const userRepository = {
             return null;
         }
 
-        return UserModel.findById(id).populate("roles");
+        return UserModel.findById(id).populate(["roles", "userProfile"]);
     },
 
     findByUsername(username: string) {
@@ -58,7 +58,7 @@ export const userRepository = {
 
         const [data, total] = await Promise.all([
             UserModel.find(filter)
-                .populate("roles")
+                .populate(["roles", "userProfile"])
                 .sort({ createdAt: -1 })
                 .skip(query.skip)
                 .limit(query.limit),
@@ -76,7 +76,7 @@ export const userRepository = {
         return UserModel.findByIdAndUpdate(id, data, {
             new: true,
             runValidators: true,
-        }).populate("roles");
+        }).populate(["roles", "userProfile"]);
     },
 
     delete(id: string) {
@@ -84,6 +84,6 @@ export const userRepository = {
             return null;
         }
 
-        return UserModel.findByIdAndDelete(id).populate("roles");
+        return UserModel.findByIdAndDelete(id).populate(["roles", "userProfile"]);
     },
 };

@@ -3,6 +3,7 @@ import { HttpException } from "../../../../common/exceptions/http.exception";
 import { BasePaginationService, PaginationQueryDto } from "../../../../common/services/base-pagination.service";
 import { passwordHashUtil } from "../../../../common/utils/password-hash.util";
 import { RoleModel } from "../role/role.model";
+import { UserProfileModel } from "../user-profile/user-profile.model";
 import { CreateUserRequestDto } from "./dto/create-user-request.dto";
 import { UpdateUserRequestDto } from "./dto/update-user-request.dto";
 import { userRepository } from "./user.repository";
@@ -44,15 +45,36 @@ const validateRoleIds = async (roleIds?: string[]) => {
     return normalizedRoleIds;
 };
 
+const validateUserProfile = async (userProfileId?: string) => {
+    if (userProfileId === undefined) {
+        return undefined;
+    }
+
+    const normalizedUserProfileId = userProfileId.trim();
+
+    if (!Types.ObjectId.isValid(normalizedUserProfileId)) {
+        throw new HttpException(400, "Invalid user profile");
+    }
+
+    const userProfile = await UserProfileModel.exists({ _id: normalizedUserProfileId });
+
+    if (!userProfile) {
+        throw new HttpException(404, "User profile not found");
+    }
+
+    return normalizedUserProfileId;
+};
+
 export const userService = {
     async create(data: CreateUserRequestDto) {
         const username = normalizeUsername(data.username);
         const email = normalizeEmail(data.email);
 
-        const [existingUsername, existingEmail, roles] = await Promise.all([
+        const [existingUsername, existingEmail, roles, userProfile] = await Promise.all([
             userRepository.findByUsername(username),
             userRepository.findByEmail(email),
             validateRoleIds(data.roles),
+            validateUserProfile(data.userProfile),
         ]);
 
         if (existingUsername) {
@@ -70,6 +92,7 @@ export const userService = {
             email,
             password,
             roles,
+            userProfile,
             isSuperUser: data.isSuperUser ?? false,
             isActive: data.isActive ?? true,
         });
@@ -123,6 +146,10 @@ export const userService = {
 
         if (data.roles !== undefined) {
             updateData.roles = await validateRoleIds(data.roles);
+        }
+
+        if (data.userProfile !== undefined) {
+            updateData.userProfile = await validateUserProfile(data.userProfile);
         }
 
         if (data.isSuperUser !== undefined) {

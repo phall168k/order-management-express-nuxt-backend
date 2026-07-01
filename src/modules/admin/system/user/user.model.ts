@@ -5,6 +5,7 @@ export interface UserDocument extends Document {
     email: string;
     password: string;
     roles: Types.ObjectId[];
+    userProfile?: Types.ObjectId;
     isSuperUser: boolean;
     isActive: boolean;
     createdAt: Date;
@@ -46,6 +47,11 @@ const userSchema = new Schema<UserDocument>(
                 ref: "Role",
             },
         ],
+        userProfile: {
+            type: Schema.Types.ObjectId,
+            ref: "UserProfile",
+            required: false,
+        },
         isSuperUser: {
             type: Boolean,
             default: false,
