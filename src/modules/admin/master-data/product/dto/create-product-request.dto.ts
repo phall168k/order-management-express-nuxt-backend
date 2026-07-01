@@ -5,4 +5,5 @@ export interface CreateProductRequestDto {
     unitPrice: number;
     description?: string;
     thumbnail: string;
+    category: string;
 }

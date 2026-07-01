@@ -5,4 +5,5 @@ export interface UpdateProductRequestDto {
     unitPrice?: number;
     description?: string;
     thumbnail?: string;
+    category?: string;
 }

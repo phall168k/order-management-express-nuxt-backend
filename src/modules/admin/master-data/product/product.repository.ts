@@ -22,9 +22,16 @@ const populateCreatedByUser = {
     select: "username email",
 };
 
+const populateCategory = {
+    path: "category",
+    select: "code nameEn nameKh description",
+};
+
 export const productRepository = {
-    create(data: ProductCreateData) {
-        return ProductModel.create(data);
+    async create(data: ProductCreateData) {
+        const product = await ProductModel.create(data);
+
+        return product.populate([populateCreatedByUser, populateCategory]);
     },
 
     findById(id: string) {
@@ -32,7 +39,7 @@ export const productRepository = {
             return null;
         }
 
-        return ProductModel.findById(id).populate(populateCreatedByUser);
+        return ProductModel.findById(id).populate([populateCreatedByUser, populateCategory]);
     },
 
     findByCode(code: string) {
@@ -60,7 +67,7 @@ export const productRepository = {
 
         const [data, total] = await Promise.all([
             ProductModel.find(filter)
-                .populate(populateCreatedByUser)
+                .populate([populateCreatedByUser, populateCategory])
                 .sort({ createdAt: -1 })
                 .skip(query.skip)
                 .limit(query.limit),
@@ -78,7 +85,7 @@ export const productRepository = {
         return ProductModel.findByIdAndUpdate(id, data, {
             new: true,
             runValidators: true,
-        }).populate(populateCreatedByUser);
+        }).populate([populateCreatedByUser, populateCategory]);
     },
 
     delete(id: string) {
@@ -86,6 +93,6 @@ export const productRepository = {
             return null;
         }
 
-        return ProductModel.findByIdAndDelete(id).populate(populateCreatedByUser);
+        return ProductModel.findByIdAndDelete(id).populate([populateCreatedByUser, populateCategory]);
     },
 };

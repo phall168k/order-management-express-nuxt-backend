@@ -404,6 +404,9 @@ export const swaggerSpec = swaggerJsdoc({
                             type: "string",
                             example: "uploads/products/sample-product.jpg",
                         },
+                        category: {
+                            $ref: "#/components/schemas/Category",
+                        },
                         createdByUser: {
                             $ref: "#/components/schemas/User",
                         },
@@ -419,7 +422,7 @@ export const swaggerSpec = swaggerJsdoc({
                 },
                 CreateProductRequest: {
                     type: "object",
-                    required: ["code", "nameEn", "nameKh", "unitPrice", "thumbnail"],
+                    required: ["code", "nameEn", "nameKh", "unitPrice", "thumbnail", "category"],
                     properties: {
                         code: {
                             type: "string",
@@ -444,6 +447,10 @@ export const swaggerSpec = swaggerJsdoc({
                         thumbnail: {
                             type: "string",
                             example: "uploads/products/sample-product.jpg",
+                        },
+                        category: {
+                            type: "string",
+                            example: "65f1a9f2c1a3a7d9f3b77777",
                         },
                     },
                 },
@@ -473,6 +480,10 @@ export const swaggerSpec = swaggerJsdoc({
                         thumbnail: {
                             type: "string",
                             example: "uploads/products/updated-product.jpg",
+                        },
+                        category: {
+                            type: "string",
+                            example: "65f1a9f2c1a3a7d9f3b77777",
                         },
                     },
                 },

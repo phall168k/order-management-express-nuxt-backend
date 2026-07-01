@@ -6,8 +6,9 @@ export interface ProductDocument extends Document {
     nameKh: string;
     unitPrice: number;
     description?: string;
-    thumbnail: string;
+    thumbnail?: string;
     createdByUser: Types.ObjectId;
+    category: Types.ObjectId;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -56,11 +57,16 @@ const productSchema = new Schema<ProductDocument>(
         },
         thumbnail: {
             type: String,
+            required: false,
+            trim: true,
+        },
+        category: {
+            type: Schema.Types.ObjectId,
+            ref: "Category",
             required: [
                 true,
-                "Product thumbnail is required",
+                "Category is required",
             ],
-            trim: true,
         },
         createdByUser: {
             type: Schema.Types.ObjectId,

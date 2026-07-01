@@ -42,6 +42,10 @@ export const validateCreateProduct = (
         return next(new HttpException(400, "Product thumbnail is required"));
     }
 
+    if (!isNonEmptyString(req.body.category)) {
+        return next(new HttpException(400, "Product category is required"));
+    }
+
     next();
 };
 
@@ -72,6 +76,10 @@ export const validateUpdateProduct = (
 
     if (req.body.thumbnail !== undefined && !isNonEmptyString(req.body.thumbnail)) {
         return next(new HttpException(400, "Product thumbnail must be a non-empty string"));
+    }
+
+    if (req.body.category !== undefined && !isNonEmptyString(req.body.category)) {
+        return next(new HttpException(400, "Product category must be a non-empty string"));
     }
 
     next();

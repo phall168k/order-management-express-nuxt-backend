@@ -1,5 +1,7 @@
+import { Types } from "mongoose";
 import { HttpException } from "../../../../common/exceptions/http.exception";
 import { BasePaginationService, PaginationQueryDto } from "../../../../common/services/base-pagination.service";
+import { CategoryModel } from "../category/category.model";
 import { UserModel } from "../../system/user/user.model";
 import { CreateProductRequestDto } from "./dto/create-product-request.dto";
 import { UpdateProductRequestDto } from "./dto/update-product-request.dto";
@@ -25,16 +27,31 @@ const validateCreatedByUser = async (userId: string) => {
     }
 };
 
+const validateCategory = async (categoryId: string) => {
+    if (!Types.ObjectId.isValid(categoryId)) {
+        throw new HttpException(400, "Invalid category");
+    }
+
+    const category = await CategoryModel.exists({ _id: categoryId });
+
+    if (!category) {
+        throw new HttpException(404, "Category not found");
+    }
+};
+
 export const productService = {
     async create(data: CreateProductRequestDto, createdByUser: string) {
         await validateCreatedByUser(createdByUser);
 
         const code = normalizeString(data.code);
+        const category = normalizeString(data.category);
         const existingProduct = await productRepository.findByCode(code);
 
         if (existingProduct) {
             throw new HttpException(409, "Product code already exists");
         }
+
+        await validateCategory(category);
 
         return productRepository.create({
             code,
@@ -43,6 +60,7 @@ export const productService = {
             unitPrice: data.unitPrice,
             description: normalizeOptionalString(data.description),
             thumbnail: normalizeString(data.thumbnail),
+            category,
             createdByUser,
         });
     },
@@ -96,6 +114,12 @@ export const productService = {
 
         if (data.thumbnail !== undefined) {
             updateData.thumbnail = normalizeString(data.thumbnail);
+        }
+
+        if (data.category !== undefined) {
+            const category = normalizeString(data.category);
+            await validateCategory(category);
+            updateData.category = category;
         }
 
         const product = await productRepository.update(id, updateData);
