@@ -666,6 +666,120 @@ export const swaggerSpec = swaggerJsdoc({
                         },
                     },
                 },
+                Stock: {
+                    type: "object",
+                    properties: {
+                        _id: {
+                            type: "string",
+                            example: "65f1a9f2c1a3a7d9f3b55555",
+                        },
+                        product: {
+                            $ref: "#/components/schemas/Product",
+                        },
+                        minStock: {
+                            type: "number",
+                            example: 10,
+                        },
+                        stockIn: {
+                            type: "number",
+                            example: 100,
+                        },
+                        stockOut: {
+                            type: "number",
+                            example: 20,
+                        },
+                        stockAdjustment: {
+                            type: "number",
+                            example: 5,
+                        },
+                        isStock: {
+                            type: "boolean",
+                            example: true,
+                        },
+                        note: {
+                            type: "string",
+                            example: "Initial stock entry",
+                        },
+                        createdByUser: {
+                            $ref: "#/components/schemas/User",
+                        },
+                        createdAt: {
+                            type: "string",
+                            format: "date-time",
+                        },
+                        updatedAt: {
+                            type: "string",
+                            format: "date-time",
+                        },
+                    },
+                },
+                CreateStockRequest: {
+                    type: "object",
+                    required: ["product", "minStock", "stockIn", "stockOut", "stockAdjustment"],
+                    properties: {
+                        product: {
+                            type: "string",
+                            example: "65f1a9f2c1a3a7d9f3b88888",
+                        },
+                        minStock: {
+                            type: "number",
+                            example: 10,
+                        },
+                        stockIn: {
+                            type: "number",
+                            example: 100,
+                        },
+                        stockOut: {
+                            type: "number",
+                            example: 20,
+                        },
+                        stockAdjustment: {
+                            type: "number",
+                            example: 5,
+                        },
+                        isStock: {
+                            type: "boolean",
+                            example: true,
+                        },
+                        note: {
+                            type: "string",
+                            example: "Initial stock entry",
+                        },
+                    },
+                },
+                UpdateStockRequest: {
+                    type: "object",
+                    properties: {
+                        product: {
+                            type: "string",
+                            example: "65f1a9f2c1a3a7d9f3b88888",
+                        },
+                        minStock: {
+                            type: "number",
+                            example: 12,
+                        },
+                        stockIn: {
+                            type: "number",
+                            example: 120,
+                        },
+                        stockOut: {
+                            type: "number",
+                            example: 25,
+                        },
+                        stockAdjustment: {
+                            type: "number",
+                            example: 3,
+                        },
+                        isStock: {
+                            type: "boolean",
+                            example: false,
+                        },
+                        note: {
+                            type: "string",
+                            example: "Updated stock note",
+                        },
+                    },
+                },
                 PaginationMeta: {
                     type: "object",
                     properties: {

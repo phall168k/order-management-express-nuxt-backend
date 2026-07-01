@@ -27,11 +27,16 @@ const populateCategory = {
     select: "code nameEn nameKh description",
 };
 
+const populateStock = {
+    path: "stock",
+    select: "minStock stockIn stockOut stockAdjustment isStock note",
+};
+
 export const productRepository = {
     async create(data: ProductCreateData) {
         const product = await ProductModel.create(data);
 
-        return product.populate([populateCreatedByUser, populateCategory]);
+        return product.populate([populateCreatedByUser, populateCategory, populateStock]);
     },
 
     findById(id: string) {
@@ -39,7 +44,7 @@ export const productRepository = {
             return null;
         }
 
-        return ProductModel.findById(id).populate([populateCreatedByUser, populateCategory]);
+        return ProductModel.findById(id).populate([populateCreatedByUser, populateCategory, populateStock]);
     },
 
     findByCode(code: string) {
@@ -67,7 +72,7 @@ export const productRepository = {
 
         const [data, total] = await Promise.all([
             ProductModel.find(filter)
-                .populate([populateCreatedByUser, populateCategory])
+                .populate([populateCreatedByUser, populateCategory, populateStock])
                 .sort({ createdAt: -1 })
                 .skip(query.skip)
                 .limit(query.limit),
@@ -75,6 +80,14 @@ export const productRepository = {
         ]);
 
         return { data, total };
+    },
+
+    findSelectOptions() {
+        return ProductModel.find()
+            .select("_id code nameEn nameKh unitPrice thumbnail")
+            .populate(populateStock)
+            .sort({ code: 1 })
+            .lean();
     },
 
     update(id: string, data: UpdateProductRequestDto) {
@@ -85,7 +98,7 @@ export const productRepository = {
         return ProductModel.findByIdAndUpdate(id, data, {
             new: true,
             runValidators: true,
-        }).populate([populateCreatedByUser, populateCategory]);
+        }).populate([populateCreatedByUser, populateCategory, populateStock]);
     },
 
     delete(id: string) {
@@ -93,6 +106,6 @@ export const productRepository = {
             return null;
         }
 
-        return ProductModel.findByIdAndDelete(id).populate([populateCreatedByUser, populateCategory]);
+        return ProductModel.findByIdAndDelete(id).populate([populateCreatedByUser, populateCategory, populateStock]);
     },
 };

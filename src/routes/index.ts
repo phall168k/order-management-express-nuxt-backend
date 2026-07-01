@@ -7,6 +7,7 @@ import userProfileRoutes from '../modules/admin/system/user-profile/user-profile
 import minioRoutes from '../minio/minio.route';
 import categoryRoutes from '../modules/admin/master-data/category/category.route';
 import productRoutes from '../modules/admin/master-data/product/product.route';
+import stockRoutes from '../modules/admin/inventory/stock/stock.route';
 
 const router = Router();
 
@@ -18,5 +19,6 @@ router.use('/system/user-profiles', userProfileRoutes);
 router.use('/minio', minioRoutes);
 router.use('/master-data/categories', categoryRoutes);
 router.use('/master-data/products', productRoutes);
+router.use('/inventory/stocks', stockRoutes);
 
 export default router;

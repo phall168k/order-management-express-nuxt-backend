@@ -1,11 +1,11 @@
 import { Router } from "express";
 import { authMiddleware } from "../../../../common/middlewares/auth.middleware";
 import { permissionMiddleware } from "../../../../common/middlewares/permission.middleware";
-import { productController } from "./product.controller";
+import { stockController } from "./stock.controller";
 import {
-    validateCreateProduct,
-    validateUpdateProduct,
-} from "./product.validation";
+    validateCreateStock,
+    validateUpdateStock,
+} from "./stock.validation";
 
 const router = Router();
 
@@ -13,10 +13,10 @@ router.use(authMiddleware);
 
 /**
  * @swagger
- * /master-data/products:
+ * /inventory/stocks:
  *   get:
- *     summary: Get products with pagination
- *     tags: [Products]
+ *     summary: Get stocks with pagination
+ *     tags: [Stocks]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -36,10 +36,10 @@ router.use(authMiddleware);
  *           type: string
  *     responses:
  *       200:
- *         description: Products fetched successfully
+ *         description: Stocks fetched successfully
  *   post:
- *     summary: Create a product
- *     tags: [Products]
+ *     summary: Create stock
+ *     tags: [Stocks]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -47,40 +47,22 @@ router.use(authMiddleware);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/CreateProductRequest'
+ *             $ref: '#/components/schemas/CreateStockRequest'
  *     responses:
  *       201:
- *         description: Product created successfully
+ *         description: Stock created successfully
  */
 router
     .route("/")
-    .get(permissionMiddleware("product.read"), productController.findAll)
-    .post(permissionMiddleware("product.create"), validateCreateProduct, productController.create);
+    .get(permissionMiddleware("stock.read"), stockController.findAll)
+    .post(permissionMiddleware("stock.create"), validateCreateStock, stockController.create);
 
 /**
  * @swagger
- * /master-data/products/select-options:
+ * /inventory/stocks/{id}:
  *   get:
- *     summary: Get product select options
- *     tags: [Products]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Product select options fetched successfully
- */
-router.get(
-    "/select-options",
-    permissionMiddleware("product.read"),
-    productController.findSelectOptions,
-);
-
-/**
- * @swagger
- * /master-data/products/{id}:
- *   get:
- *     summary: Get a product by id
- *     tags: [Products]
+ *     summary: Get stock by id
+ *     tags: [Stocks]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -91,12 +73,12 @@ router.get(
  *           type: string
  *     responses:
  *       200:
- *         description: Product fetched successfully
+ *         description: Stock fetched successfully
  *       404:
- *         description: Product not found
+ *         description: Stock not found
  *   put:
- *     summary: Update a product
- *     tags: [Products]
+ *     summary: Update stock
+ *     tags: [Stocks]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -110,13 +92,13 @@ router.get(
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/UpdateProductRequest'
+ *             $ref: '#/components/schemas/UpdateStockRequest'
  *     responses:
  *       200:
- *         description: Product updated successfully
+ *         description: Stock updated successfully
  *   delete:
- *     summary: Delete a product
- *     tags: [Products]
+ *     summary: Delete stock
+ *     tags: [Stocks]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -127,12 +109,12 @@ router.get(
  *           type: string
  *     responses:
  *       200:
- *         description: Product deleted successfully
+ *         description: Stock deleted successfully
  */
 router
     .route("/:id")
-    .get(permissionMiddleware("product.read"), productController.findById)
-    .put(permissionMiddleware("product.update"), validateUpdateProduct, productController.update)
-    .delete(permissionMiddleware("product.delete"), productController.delete);
+    .get(permissionMiddleware("stock.read"), stockController.findById)
+    .put(permissionMiddleware("stock.update"), validateUpdateStock, stockController.update)
+    .delete(permissionMiddleware("stock.delete"), stockController.delete);
 
 export default router;

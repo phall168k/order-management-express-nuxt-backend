@@ -1,4 +1,5 @@
 import { Document, model, Schema, Types } from "mongoose";
+import type { StockDocument } from "../../inventory/stock/stock.model";
 
 export interface ProductDocument extends Document {
     code: string;
@@ -9,6 +10,7 @@ export interface ProductDocument extends Document {
     thumbnail?: string;
     createdByUser: Types.ObjectId;
     category: Types.ObjectId;
+    stock?: StockDocument | null;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -79,8 +81,17 @@ const productSchema = new Schema<ProductDocument>(
     },
     {
         timestamps: true,
+        toJSON: { virtuals: true },
+        toObject: { virtuals: true },
     },
 );
+
+productSchema.virtual("stock", {
+    ref: "Stock",
+    localField: "_id",
+    foreignField: "product",
+    justOne: true,
+});
 
 export const ProductModel = model<ProductDocument>(
     "Product",

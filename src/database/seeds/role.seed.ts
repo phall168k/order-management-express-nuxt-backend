@@ -27,6 +27,10 @@ const roleSeeds = [
             "product.read",
             "product.update",
             "product.delete",
+            "stock.create",
+            "stock.read",
+            "stock.update",
+            "stock.delete",
         ],
     },
     {
@@ -38,6 +42,7 @@ const roleSeeds = [
             "user-profile.read",
             "category.read",
             "product.read",
+            "stock.read",
         ],
     },
 ];

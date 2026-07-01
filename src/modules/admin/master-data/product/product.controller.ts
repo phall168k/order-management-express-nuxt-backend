@@ -50,6 +50,16 @@ export const productController = {
         });
     },
 
+    async findSelectOptions(_req: Request, res: Response) {
+        const products = await productService.findSelectOptions();
+
+        return res.status(200).json({
+            success: true,
+            message: "Product select options fetched successfully",
+            data: products,
+        });
+    },
+
     async update(req: Request<{ id: string }, object, UpdateProductRequestDto>, res: Response) {
         const product = await productService.update(getIdParam(req), req.body);
 

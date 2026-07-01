@@ -82,6 +82,20 @@ export const productService = {
         return product;
     },
 
+    async findSelectOptions() {
+        const products = await productRepository.findSelectOptions();
+
+        return products.map((product) => ({
+            id: product._id.toString(),
+            code: product.code,
+            nameEn: product.nameEn,
+            nameKh: product.nameKh,
+            unitPrice: product.unitPrice,
+            thumbnail: product.thumbnail,
+            stock: product.stock ?? null,
+        }));
+    },
+
     async update(id: string, data: UpdateProductRequestDto) {
         const updateData: UpdateProductRequestDto = {};
 
