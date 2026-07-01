@@ -4,6 +4,7 @@ import permissionRoutes from '../modules/admin/system/permissoin/permission.rout
 import roleRoutes from '../modules/admin/system/role/role.route';
 import userRoutes from '../modules/admin/system/user/user.route';
 import userProfileRoutes from '../modules/admin/system/user-profile/user-profile.route';
+import paymentMethodRoutes from '../modules/admin/system/payment-method/payment-method.route';
 import minioRoutes from '../minio/minio.route';
 import categoryRoutes from '../modules/admin/master-data/category/category.route';
 import productRoutes from '../modules/admin/master-data/product/product.route';
@@ -18,6 +19,7 @@ router.use('/system/permissions', permissionRoutes);
 router.use('/system/roles', roleRoutes);
 router.use('/system/users', userRoutes);
 router.use('/system/user-profiles', userProfileRoutes);
+router.use('/system/payment-methods', paymentMethodRoutes);
 router.use('/minio', minioRoutes);
 router.use('/master-data/categories', categoryRoutes);
 router.use('/master-data/products', productRoutes);

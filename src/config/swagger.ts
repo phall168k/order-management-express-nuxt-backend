@@ -473,6 +473,172 @@ export const swaggerSpec = swaggerJsdoc({
                         },
                     },
                 },
+                PaymentMethod: {
+                    type: "object",
+                    properties: {
+                        _id: {
+                            type: "string",
+                            example: "65f1a9f2c1a3a7d9f3b33333",
+                        },
+                        logo: {
+                            type: "string",
+                            example: "uploads/payment-methods/aba.png",
+                        },
+                        bankAccount: {
+                            type: "string",
+                            example: "001234567",
+                        },
+                        merchantName: {
+                            type: "string",
+                            example: "Demo Store",
+                        },
+                        merchantCity: {
+                            type: "string",
+                            example: "Phnom Penh",
+                        },
+                        amount: {
+                            type: "number",
+                            example: 10.5,
+                        },
+                        currency: {
+                            type: "string",
+                            enum: ["usd", "khr"],
+                            example: "usd",
+                        },
+                        storeLabel: {
+                            type: "string",
+                            example: "Main Branch",
+                        },
+                        phoneNumber: {
+                            type: "string",
+                            example: "+85512345678",
+                        },
+                        billNumber: {
+                            type: "string",
+                            example: "BILL-001",
+                        },
+                        terminalLabel: {
+                            type: "string",
+                            example: "POS-01",
+                        },
+                        isActive: {
+                            type: "boolean",
+                            example: true,
+                        },
+                        createdByUser: {
+                            $ref: "#/components/schemas/User",
+                        },
+                        createdAt: {
+                            type: "string",
+                            format: "date-time",
+                        },
+                        updatedAt: {
+                            type: "string",
+                            format: "date-time",
+                        },
+                    },
+                },
+                CreatePaymentMethodRequest: {
+                    type: "object",
+                    required: ["currency"],
+                    properties: {
+                        logo: {
+                            type: "string",
+                            example: "uploads/payment-methods/aba.png",
+                        },
+                        bankAccount: {
+                            type: "string",
+                            example: "001234567",
+                        },
+                        merchantName: {
+                            type: "string",
+                            example: "Demo Store",
+                        },
+                        merchantCity: {
+                            type: "string",
+                            example: "Phnom Penh",
+                        },
+                        amount: {
+                            type: "number",
+                            example: 10.5,
+                        },
+                        currency: {
+                            type: "string",
+                            enum: ["usd", "khr"],
+                            example: "usd",
+                        },
+                        storeLabel: {
+                            type: "string",
+                            example: "Main Branch",
+                        },
+                        phoneNumber: {
+                            type: "string",
+                            example: "+85512345678",
+                        },
+                        billNumber: {
+                            type: "string",
+                            example: "BILL-001",
+                        },
+                        terminalLabel: {
+                            type: "string",
+                            example: "POS-01",
+                        },
+                        isActive: {
+                            type: "boolean",
+                            example: true,
+                        },
+                    },
+                },
+                UpdatePaymentMethodRequest: {
+                    type: "object",
+                    properties: {
+                        logo: {
+                            type: "string",
+                            example: "uploads/payment-methods/acleda.png",
+                        },
+                        bankAccount: {
+                            type: "string",
+                            example: "009876543",
+                        },
+                        merchantName: {
+                            type: "string",
+                            example: "Updated Store",
+                        },
+                        merchantCity: {
+                            type: "string",
+                            example: "Siem Reap",
+                        },
+                        amount: {
+                            type: "number",
+                            example: 20,
+                        },
+                        currency: {
+                            type: "string",
+                            enum: ["usd", "khr"],
+                            example: "khr",
+                        },
+                        storeLabel: {
+                            type: "string",
+                            example: "Branch 2",
+                        },
+                        phoneNumber: {
+                            type: "string",
+                            example: "+85598765432",
+                        },
+                        billNumber: {
+                            type: "string",
+                            example: "BILL-002",
+                        },
+                        terminalLabel: {
+                            type: "string",
+                            example: "POS-02",
+                        },
+                        isActive: {
+                            type: "boolean",
+                            example: false,
+                        },
+                    },
+                },
                 Category: {
                     type: "object",
                     properties: {
