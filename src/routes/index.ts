@@ -9,6 +9,7 @@ import categoryRoutes from '../modules/admin/master-data/category/category.route
 import productRoutes from '../modules/admin/master-data/product/product.route';
 import stockRoutes from '../modules/admin/inventory/stock/stock.route';
 import stockInRoutes from '../modules/admin/inventory/stock-in/stock-in.route';
+import stockAdjustmentRoutes from '../modules/admin/inventory/stock-adjustment/stock-adjustment.route';
 
 const router = Router();
 
@@ -22,5 +23,6 @@ router.use('/master-data/categories', categoryRoutes);
 router.use('/master-data/products', productRoutes);
 router.use('/inventory/stocks', stockRoutes);
 router.use('/inventory/stock-ins', stockInRoutes);
+router.use('/inventory/stock-adjustments', stockAdjustmentRoutes);
 
 export default router;

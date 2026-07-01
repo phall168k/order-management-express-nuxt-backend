@@ -908,6 +908,113 @@ export const swaggerSpec = swaggerJsdoc({
                         },
                     },
                 },
+                StockAdjustment: {
+                    type: "object",
+                    properties: {
+                        _id: {
+                            type: "string",
+                            example: "65f1a9f2c1a3a7d9f3b99992",
+                        },
+                        code: {
+                            type: "string",
+                            example: "STA2600001",
+                        },
+                        stockAdjustmentDate: {
+                            type: "string",
+                            format: "date",
+                            example: "2026-07-01",
+                        },
+                        product: {
+                            $ref: "#/components/schemas/Product",
+                        },
+                        quantity: {
+                            type: "number",
+                            example: 5,
+                        },
+                        note: {
+                            type: "string",
+                            example: "Stock adjustment note",
+                        },
+                        createdByUser: {
+                            $ref: "#/components/schemas/User",
+                        },
+                        createdAt: {
+                            type: "string",
+                            format: "date-time",
+                        },
+                        updatedAt: {
+                            type: "string",
+                            format: "date-time",
+                        },
+                    },
+                },
+                CreateStockAdjustmentItemRequest: {
+                    type: "object",
+                    required: ["stockAdjustmentDate", "product", "quantity"],
+                    properties: {
+                        stockAdjustmentDate: {
+                            type: "string",
+                            format: "date",
+                            example: "2026-07-01",
+                        },
+                        product: {
+                            type: "string",
+                            example: "65f1a9f2c1a3a7d9f3b88888",
+                        },
+                        quantity: {
+                            type: "number",
+                            example: 5,
+                        },
+                        note: {
+                            type: "string",
+                            example: "Stock adjustment note",
+                        },
+                    },
+                },
+                CreateStockAdjustmentRequest: {
+                    oneOf: [
+                        {
+                            type: "array",
+                            items: {
+                                $ref: "#/components/schemas/CreateStockAdjustmentItemRequest",
+                            },
+                        },
+                        {
+                            type: "object",
+                            required: ["items"],
+                            properties: {
+                                items: {
+                                    type: "array",
+                                    items: {
+                                        $ref: "#/components/schemas/CreateStockAdjustmentItemRequest",
+                                    },
+                                },
+                            },
+                        },
+                    ],
+                },
+                UpdateStockAdjustmentRequest: {
+                    type: "object",
+                    properties: {
+                        stockAdjustmentDate: {
+                            type: "string",
+                            format: "date",
+                            example: "2026-07-02",
+                        },
+                        product: {
+                            type: "string",
+                            example: "65f1a9f2c1a3a7d9f3b88888",
+                        },
+                        quantity: {
+                            type: "number",
+                            example: 8,
+                        },
+                        note: {
+                            type: "string",
+                            example: "Updated stock adjustment note",
+                        },
+                    },
+                },
             },
         },
     },
