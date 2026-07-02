@@ -115,6 +115,10 @@ export const userService = {
         return user;
     },
 
+    async findSelectOptions() {
+        return userRepository.findSelectOptions();
+    },
+
     async update(id: string, data: UpdateUserRequestDto) {
         const updateData: UpdateUserRequestDto = {};
 

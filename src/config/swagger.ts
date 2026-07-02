@@ -1193,6 +1193,193 @@ export const swaggerSpec = swaggerJsdoc({
                         },
                     },
                 },
+                SaleItem: {
+                    type: "object",
+                    properties: {
+                        product: {
+                            $ref: "#/components/schemas/Product",
+                        },
+                        quantity: {
+                            type: "number",
+                            example: 2,
+                        },
+                        unitPrice: {
+                            type: "number",
+                            example: 12.5,
+                        },
+                        discount: {
+                            type: "number",
+                            example: 1,
+                        },
+                        note: {
+                            type: "string",
+                            example: "Item note",
+                        },
+                    },
+                },
+                Sale: {
+                    type: "object",
+                    properties: {
+                        _id: {
+                            type: "string",
+                            example: "65f1a9f2c1a3a7d9f3b44444",
+                        },
+                        code: {
+                            type: "string",
+                            example: "SALE-001",
+                        },
+                        customer: {
+                            $ref: "#/components/schemas/User",
+                        },
+                        salingDate: {
+                            type: "string",
+                            format: "date-time",
+                            example: "2026-07-01T10:00:00.000Z",
+                        },
+                        createdByUser: {
+                            $ref: "#/components/schemas/User",
+                        },
+                        status: {
+                            type: "string",
+                            enum: ["pending", "packing", "shipping", "delivered", "completed"],
+                            example: "pending",
+                        },
+                        paymentMethod: {
+                            $ref: "#/components/schemas/PaymentMethod",
+                        },
+                        address: {
+                            type: "string",
+                            example: "Phnom Penh",
+                        },
+                        note: {
+                            type: "string",
+                            example: "Sale note",
+                        },
+                        items: {
+                            type: "array",
+                            items: {
+                                $ref: "#/components/schemas/SaleItem",
+                            },
+                        },
+                        createdAt: {
+                            type: "string",
+                            format: "date-time",
+                        },
+                        updatedAt: {
+                            type: "string",
+                            format: "date-time",
+                        },
+                    },
+                },
+                CreateSaleItemRequest: {
+                    type: "object",
+                    required: ["product", "quantity", "unitPrice", "discount"],
+                    properties: {
+                        product: {
+                            type: "string",
+                            example: "65f1a9f2c1a3a7d9f3b88888",
+                        },
+                        quantity: {
+                            type: "number",
+                            example: 2,
+                        },
+                        unitPrice: {
+                            type: "number",
+                            example: 12.5,
+                        },
+                        discount: {
+                            type: "number",
+                            example: 1,
+                        },
+                        note: {
+                            type: "string",
+                            example: "Item note",
+                        },
+                    },
+                },
+                CreateSaleRequest: {
+                    type: "object",
+                    required: ["code", "customer", "salingDate", "status", "paymentMethod", "address", "items"],
+                    properties: {
+                        code: {
+                            type: "string",
+                            example: "SALE-001",
+                        },
+                        customer: {
+                            type: "string",
+                            example: "65f1a9f2c1a3a7d9f3b99999",
+                        },
+                        salingDate: {
+                            type: "string",
+                            format: "date-time",
+                            example: "2026-07-01T10:00:00.000Z",
+                        },
+                        status: {
+                            type: "string",
+                            enum: ["pending", "packing", "shipping", "delivered", "completed"],
+                            example: "pending",
+                        },
+                        paymentMethod: {
+                            type: "string",
+                            example: "65f1a9f2c1a3a7d9f3b33333",
+                        },
+                        address: {
+                            type: "string",
+                            example: "Phnom Penh",
+                        },
+                        note: {
+                            type: "string",
+                            example: "Sale note",
+                        },
+                        items: {
+                            type: "array",
+                            items: {
+                                $ref: "#/components/schemas/CreateSaleItemRequest",
+                            },
+                        },
+                    },
+                },
+                UpdateSaleRequest: {
+                    type: "object",
+                    properties: {
+                        code: {
+                            type: "string",
+                            example: "SALE-002",
+                        },
+                        customer: {
+                            type: "string",
+                            example: "65f1a9f2c1a3a7d9f3b99999",
+                        },
+                        salingDate: {
+                            type: "string",
+                            format: "date-time",
+                            example: "2026-07-02T10:00:00.000Z",
+                        },
+                        status: {
+                            type: "string",
+                            enum: ["pending", "packing", "shipping", "delivered", "completed"],
+                            example: "packing",
+                        },
+                        paymentMethod: {
+                            type: "string",
+                            example: "65f1a9f2c1a3a7d9f3b33333",
+                        },
+                        address: {
+                            type: "string",
+                            example: "Siem Reap",
+                        },
+                        note: {
+                            type: "string",
+                            example: "Updated sale note",
+                        },
+                        items: {
+                            type: "array",
+                            items: {
+                                $ref: "#/components/schemas/CreateSaleItemRequest",
+                            },
+                        },
+                    },
+                },
             },
         },
     },

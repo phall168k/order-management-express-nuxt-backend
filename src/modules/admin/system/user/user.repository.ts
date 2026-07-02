@@ -68,6 +68,24 @@ export const userRepository = {
         return { data, total };
     },
 
+    async findSelectOptions() {
+        const users = await UserModel.find()
+            .select('_id username email')
+            .populate({
+            path: 'userProfile',
+            select: 'firstName lastName',
+            })
+            .lean();
+
+        return users.map((user: any) => ({
+            id: user._id.toString(),
+            username:
+            `${user.userProfile?.firstName ?? ''} ${user.userProfile?.lastName ?? ''}`.trim() ||
+            user.username,
+            email: user.email,
+        }));
+    },
+
     update(id: string, data: UpdateUserRequestDto) {
         if (!Types.ObjectId.isValid(id)) {
             return null;

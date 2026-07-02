@@ -78,6 +78,23 @@ router
     .get(permissionMiddleware("user.read"), userController.findAll)
     .post(permissionMiddleware("user.create"), validateCreateUser, userController.create);
 
+    /**
+     * @swagger
+     * /system/users/select-options:
+     *   get:
+     *     summary: Get user select options
+     *     tags: [Users]
+     *     security:
+     *       - bearerAuth: []
+     *     responses:
+     *       200:
+     *         description: User select options fetched successfully
+     */
+    router.get(
+        "/select-options",
+        userController.findSelectOptions,
+    );
+
 /**
  * @swagger
  * /system/users/{id}:

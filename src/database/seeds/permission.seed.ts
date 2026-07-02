@@ -42,6 +42,10 @@ export const permissionNames = [
     "stock-adjustment.read",
     "stock-adjustment.update",
     "stock-adjustment.delete",
+    "sale.create",
+    "sale.read",
+    "sale.update",
+    "sale.delete",
 ];
 
 export const seedPermissions = async () => {
