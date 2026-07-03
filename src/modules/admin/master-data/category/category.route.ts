@@ -59,7 +59,7 @@ router
 
 /**
  * @swagger
- * /categories/select-options:
+ * /master-data/categories/select-options:
  *   get:
  *     summary: Get category select options
  *     tags: [Categories]
@@ -71,7 +71,6 @@ router
  */
 router.get(
     "/select-options",
-    permissionMiddleware("category.read"),
     categoryController.findSelectOptions,
 );
 
