@@ -12,6 +12,7 @@ import stockRoutes from '../modules/admin/inventory/stock/stock.route';
 import stockInRoutes from '../modules/admin/inventory/stock-in/stock-in.route';
 import stockAdjustmentRoutes from '../modules/admin/inventory/stock-adjustment/stock-adjustment.route';
 import saleRoutes from '../modules/admin/saling/sale/sale.route';
+import bannerRoutes from '../modules/admin/saling/banner/banner.route';
 
 const router = Router();
 
@@ -28,5 +29,6 @@ router.use('/inventory/stocks', stockRoutes);
 router.use('/inventory/stock-ins', stockInRoutes);
 router.use('/inventory/stock-adjustments', stockAdjustmentRoutes);
 router.use('/saling/sales', saleRoutes);
+router.use('/saling/banners', bannerRoutes);
 
 export default router;
