@@ -4,6 +4,7 @@ export interface CategoryDocument extends Document {
     code: string;
     nameEn: string;
     nameKh: string;
+    icon?: string;
     description?: string;
     createdByUser: Types.ObjectId;
     createdAt: Date;
@@ -35,6 +36,10 @@ const categorySchema = new Schema<CategoryDocument>(
                 true,
                 "Category Khmer name is required",
             ],
+            trim: true,
+        },
+        icon: {
+            type: String,
             trim: true,
         },
         description: {

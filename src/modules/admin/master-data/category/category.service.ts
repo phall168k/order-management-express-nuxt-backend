@@ -40,6 +40,7 @@ export const categoryService = {
             code,
             nameEn: normalizeString(data.nameEn),
             nameKh: normalizeString(data.nameKh),
+            icon: normalizeOptionalString(data.icon),
             description: normalizeOptionalString(data.description),
             createdByUser,
         });
@@ -70,6 +71,7 @@ export const categoryService = {
             code: category.code,
             nameEn: category.nameEn,
             nameKh: category.nameKh,
+            icon: category.icon,
         }));
     },
 
@@ -97,6 +99,10 @@ export const categoryService = {
 
         if (data.description !== undefined) {
             updateData.description = normalizeOptionalString(data.description);
+        }
+
+        if (data.icon !== undefined) {
+            updateData.icon = normalizeOptionalString(data.icon);
         }
 
         const category = await categoryRepository.update(id, updateData);

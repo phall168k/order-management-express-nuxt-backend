@@ -30,6 +30,10 @@ export const validateCreateCategory = (
         return next(new HttpException(400, "Category description must be a string"));
     }
 
+    if (!isOptionalString(req.body.icon)) {
+        return next(new HttpException(400, "Category icon must be a string"));
+    }
+
     next();
 };
 
@@ -52,6 +56,10 @@ export const validateUpdateCategory = (
 
     if (!isOptionalString(req.body.description)) {
         return next(new HttpException(400, "Category description must be a string"));
+    }
+
+    if (!isOptionalString(req.body.icon)) {
+        return next(new HttpException(400, "Category icon must be a string"));
     }
 
     next();

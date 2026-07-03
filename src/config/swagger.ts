@@ -658,6 +658,10 @@ export const swaggerSpec = swaggerJsdoc({
                             type: "string",
                             example: "Food KH",
                         },
+                        icon: {
+                            type: "string",
+                            example: "utensils",
+                        },
                         description: {
                             type: "string",
                             example: "Food products",
@@ -691,6 +695,10 @@ export const swaggerSpec = swaggerJsdoc({
                             type: "string",
                             example: "Food KH",
                         },
+                        icon: {
+                            type: "string",
+                            example: "utensils",
+                        },
                         description: {
                             type: "string",
                             example: "Food products",
@@ -711,6 +719,10 @@ export const swaggerSpec = swaggerJsdoc({
                         nameKh: {
                             type: "string",
                             example: "Drink KH",
+                        },
+                        icon: {
+                            type: "string",
+                            example: "cup-soda",
                         },
                         description: {
                             type: "string",

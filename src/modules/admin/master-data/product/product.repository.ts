@@ -24,7 +24,7 @@ const populateCreatedByUser = {
 
 const populateCategory = {
     path: "category",
-    select: "code nameEn nameKh description",
+    select: "code nameEn nameKh icon description",
 };
 
 const populateStock = {

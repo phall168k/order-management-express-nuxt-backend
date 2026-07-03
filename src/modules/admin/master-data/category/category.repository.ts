@@ -14,6 +14,7 @@ type CategorySearchFilter = {
         nameEn?: { $regex: string; $options: string };
         nameKh?: { $regex: string; $options: string };
         description?: { $regex: string; $options: string };
+        icon?: { $regex: string; $options: string };
     }>;
 };
 
@@ -54,6 +55,7 @@ export const categoryRepository = {
                 { code: { $regex: query.search, $options: "i" } },
                 { nameEn: { $regex: query.search, $options: "i" } },
                 { nameKh: { $regex: query.search, $options: "i" } },
+                { icon: { $regex: query.search, $options: "i" } },
                 { description: { $regex: query.search, $options: "i" } },
             ];
         }
@@ -72,7 +74,7 @@ export const categoryRepository = {
 
     findSelectOptions() {
         return CategoryModel.find()
-            .select("_id code nameEn nameKh")
+            .select("_id code nameEn nameKh icon")
             .sort({ code: 1 })
             .lean();
     },
