@@ -65,6 +65,10 @@ const roleSeeds = [
             "sale.read",
         ],
     },
+    {
+        name: "Customer",
+        permissions: [],
+    },
 ];
 
 export const seedRoles = async (permissionMap: Map<string, Types.ObjectId>) => {

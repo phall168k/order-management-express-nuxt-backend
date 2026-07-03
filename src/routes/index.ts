@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import loginRoutes from '../modules/auth/login/login.route';
+import registerRoutes from '../modules/auth/register/register.route';
 import permissionRoutes from '../modules/admin/system/permissoin/permission.route';
 import roleRoutes from '../modules/admin/system/role/role.route';
 import userRoutes from '../modules/admin/system/user/user.route';
@@ -17,6 +18,7 @@ import bannerRoutes from '../modules/admin/saling/banner/banner.route';
 const router = Router();
 
 router.use('/auth/login', loginRoutes);
+router.use('/auth/register', registerRoutes);
 router.use('/system/permissions', permissionRoutes);
 router.use('/system/roles', roleRoutes);
 router.use('/system/users', userRoutes);

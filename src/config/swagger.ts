@@ -161,6 +161,21 @@ export const swaggerSpec = swaggerJsdoc({
                         },
                     },
                 },
+                RegisterUserResponse: {
+                    allOf: [
+                        {
+                            $ref: "#/components/schemas/LoginUserResponse",
+                        },
+                        {
+                            type: "object",
+                            properties: {
+                                userProfile: {
+                                    $ref: "#/components/schemas/UserProfile",
+                                },
+                            },
+                        },
+                    ],
+                },
                 CreatePermissionRequest: {
                     type: "object",
                     required: ["name"],
@@ -302,6 +317,56 @@ export const swaggerSpec = swaggerJsdoc({
                             type: "string",
                             format: "password",
                             example: "Password@123",
+                        },
+                    },
+                },
+                RegisterRequest: {
+                    type: "object",
+                    required: ["username", "email", "password", "firstName", "lastName"],
+                    properties: {
+                        username: {
+                            type: "string",
+                            example: "customer01",
+                        },
+                        email: {
+                            type: "string",
+                            format: "email",
+                            example: "customer01@example.com",
+                        },
+                        password: {
+                            type: "string",
+                            format: "password",
+                            example: "Password@123",
+                        },
+                        firstName: {
+                            type: "string",
+                            example: "Sok",
+                        },
+                        lastName: {
+                            type: "string",
+                            example: "Dara",
+                        },
+                        gender: {
+                            type: "string",
+                            enum: ["male", "female", "other"],
+                            example: "male",
+                        },
+                        dob: {
+                            type: "string",
+                            format: "date",
+                            example: "1998-01-15",
+                        },
+                        phoneNumber: {
+                            type: "string",
+                            example: "+85512345678",
+                        },
+                        address: {
+                            type: "string",
+                            example: "Phnom Penh",
+                        },
+                        profile: {
+                            type: "string",
+                            example: "uploads/profiles/customer01.jpg",
                         },
                     },
                 },
