@@ -175,7 +175,7 @@ export const minioService = {
         };
     },
 
-    async presignedGetObject(objectName: string, expiresInSeconds = 60 * 60) {
+    async presignedGetObject(objectName: string, expiresInSeconds = 10000) {
         await ensureBucket();
 
         return minioClient.presignedGetObject(
@@ -185,7 +185,7 @@ export const minioService = {
         );
     },
 
-    async presignedPutObject(objectName: string, expiresInSeconds = 60 * 60) {
+    async presignedPutObject(objectName: string, expiresInSeconds = 10000) {
         await ensureBucket();
 
         return minioClient.presignedPutObject(

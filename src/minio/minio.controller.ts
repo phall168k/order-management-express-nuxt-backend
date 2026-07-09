@@ -21,6 +21,8 @@ type PresignedBody = {
     expiresInSeconds?: number;
 };
 
+const DEFAULT_EXPIRES_IN_SECONDS = 10000;
+
 const getRequiredObjectName = (value?: string) => {
     if (!value) {
         throw new HttpException(400, "Object name is required");
@@ -31,7 +33,7 @@ const getRequiredObjectName = (value?: string) => {
 
 const getExpiresInSeconds = (value?: number) => {
     if (value === undefined) {
-        return undefined;
+        return DEFAULT_EXPIRES_IN_SECONDS;
     }
 
     if (!Number.isInteger(value) || value < 1 || value > 7 * 24 * 60 * 60) {
@@ -119,7 +121,7 @@ export const minioController = {
         return res.status(200).json({
             success: true,
             message: "Presigned download URL created successfully",
-            data: { url, expiresInSeconds: expiresInSeconds || 60 * 60 },
+            data: { url, expiresInSeconds },
         });
     },
 
@@ -133,7 +135,7 @@ export const minioController = {
         return res.status(200).json({
             success: true,
             message: "Presigned upload URL created successfully",
-            data: { url, expiresInSeconds: expiresInSeconds || 60 * 60 },
+            data: { url, expiresInSeconds },
         });
     },
 };

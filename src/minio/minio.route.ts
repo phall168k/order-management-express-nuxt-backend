@@ -137,7 +137,7 @@ router.delete("/", minioController.remove);
  *                 type: string
  *               expiresInSeconds:
  *                 type: integer
- *                 default: 3600
+ *                 default: 10000
  *     responses:
  *       200:
  *         description: Presigned download URL created successfully
@@ -162,7 +162,7 @@ router.post("/presigned-get", minioController.presignedGet);
  *                 type: string
  *               expiresInSeconds:
  *                 type: integer
- *                 default: 3600
+ *                 default: 10000
  *     responses:
  *       200:
  *         description: Presigned upload URL created successfully
