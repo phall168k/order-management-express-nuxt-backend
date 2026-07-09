@@ -9,6 +9,22 @@ import {
 
 const router = Router();
 
+/**
+ * @swagger
+ * /master-data/categories/select-options:
+ *   get:
+ *     summary: Get category select options
+ *     tags: [Categories]
+ *     security: []
+ *     responses:
+ *       200:
+ *         description: Category select options fetched successfully
+ */
+router.get(
+    "/select-options",
+    categoryController.findSelectOptions,
+);
+
 router.use(authMiddleware);
 
 /**
@@ -56,23 +72,6 @@ router
     .route("/")
     .get(permissionMiddleware("category.read"), categoryController.findAll)
     .post(permissionMiddleware("category.create"), validateCreateCategory, categoryController.create);
-
-/**
- * @swagger
- * /master-data/categories/select-options:
- *   get:
- *     summary: Get category select options
- *     tags: [Categories]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Category select options fetched successfully
- */
-router.get(
-    "/select-options",
-    categoryController.findSelectOptions,
-);
 
 /**
  * @swagger

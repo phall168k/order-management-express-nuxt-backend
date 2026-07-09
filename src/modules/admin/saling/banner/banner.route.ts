@@ -9,6 +9,22 @@ import {
 
 const router = Router();
 
+/**
+ * @swagger
+ * /saling/banners/select-options:
+ *   get:
+ *     summary: Get banner select options
+ *     tags: [Banners]
+ *     security: []
+ *     responses:
+ *       200:
+ *         description: Banner select options fetched successfully
+ */
+router.get(
+    "/select-options",
+    bannerController.findSelectOptions,
+);
+
 router.use(authMiddleware);
 
 /**
@@ -56,24 +72,6 @@ router
     .route("/")
     .get(permissionMiddleware("banner.read"), bannerController.findAll)
     .post(permissionMiddleware("banner.create"), validateCreateBanner, bannerController.create);
-
-/**
- * @swagger
- * /saling/banners/select-options:
- *   get:
- *     summary: Get banner select options
- *     tags: [Banners]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Banner select options fetched successfully
- */
-router.get(
-    "/select-options",
-    permissionMiddleware("banner.read"),
-    bannerController.findSelectOptions,
-);
 
 /**
  * @swagger

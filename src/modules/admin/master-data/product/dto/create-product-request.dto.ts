@@ -1,3 +1,5 @@
+import type { ProductThumbnail } from "../product.model";
+
 export interface CreateProductRequestDto {
     code: string;
     nameEn: string;
@@ -5,6 +7,6 @@ export interface CreateProductRequestDto {
     unitPrice: number;
     discount?: number;
     description?: string;
-    thumbnail: string;
+    thumbnail?: ProductThumbnail;
     category: string;
 }

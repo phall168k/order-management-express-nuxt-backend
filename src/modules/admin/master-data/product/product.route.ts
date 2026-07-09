@@ -9,16 +9,13 @@ import {
 
 const router = Router();
 
-router.use(authMiddleware);
-
 /**
  * @swagger
  * /master-data/products:
  *   get:
  *     summary: Get products with pagination
  *     tags: [Products]
- *     security:
- *       - bearerAuth: []
+ *     security: []
  *     parameters:
  *       - in: query
  *         name: page
@@ -37,6 +34,51 @@ router.use(authMiddleware);
  *     responses:
  *       200:
  *         description: Products fetched successfully
+ */
+router.get("/", productController.findAll);
+
+/**
+ * @swagger
+ * /master-data/products/select-options:
+ *   get:
+ *     summary: Get product select options
+ *     tags: [Products]
+ *     security: []
+ *     responses:
+ *       200:
+ *         description: Product select options fetched successfully
+ */
+router.get(
+    "/select-options",
+    productController.findSelectOptions,
+);
+
+/**
+ * @swagger
+ * /master-data/products/{id}:
+ *   get:
+ *     summary: Get a product by id
+ *     tags: [Products]
+ *     security: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Product fetched successfully
+ *       404:
+ *         description: Product not found
+ */
+router.get("/:id", productController.findById);
+
+router.use(authMiddleware);
+
+/**
+ * @swagger
+ * /master-data/products:
  *   post:
  *     summary: Create a product
  *     tags: [Products]
@@ -52,48 +94,11 @@ router.use(authMiddleware);
  *       201:
  *         description: Product created successfully
  */
-router
-    .route("/")
-    .get(permissionMiddleware("product.read"), productController.findAll)
-    .post(permissionMiddleware("product.create"), validateCreateProduct, productController.create);
-
-/**
- * @swagger
- * /master-data/products/select-options:
- *   get:
- *     summary: Get product select options
- *     tags: [Products]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Product select options fetched successfully
- */
-router.get(
-    "/select-options",
-    permissionMiddleware("product.read"),
-    productController.findSelectOptions,
-);
+router.post("/", permissionMiddleware("product.create"), validateCreateProduct, productController.create);
 
 /**
  * @swagger
  * /master-data/products/{id}:
- *   get:
- *     summary: Get a product by id
- *     tags: [Products]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Product fetched successfully
- *       404:
- *         description: Product not found
  *   put:
  *     summary: Update a product
  *     tags: [Products]
@@ -125,13 +130,18 @@ router.get(
  *         required: true
  *         schema:
  *           type: string
- *     responses:
+ *     responses:router
+    .route("/:id")
+    .put(permissionMiddleware("product.update"), validateUpdateProduct, productController.update)
+    .delete(permissionMiddleware("product.delete"), productController.delete);
+
+export default router;
+
  *       200:
  *         description: Product deleted successfully
  */
 router
     .route("/:id")
-    .get(permissionMiddleware("product.read"), productController.findById)
     .put(permissionMiddleware("product.update"), validateUpdateProduct, productController.update)
     .delete(permissionMiddleware("product.delete"), productController.delete);
 

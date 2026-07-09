@@ -5,6 +5,7 @@ import { CategoryModel } from "../category/category.model";
 import { UserModel } from "../../system/user/user.model";
 import { CreateProductRequestDto } from "./dto/create-product-request.dto";
 import { UpdateProductRequestDto } from "./dto/update-product-request.dto";
+import { ProductThumbnail } from "./product.model";
 import { productRepository } from "./product.repository";
 
 const normalizeString = (value: string) => value.trim();
@@ -18,6 +19,16 @@ const normalizeOptionalString = (value?: string) => {
 
     return normalized || undefined;
 };
+
+const normalizeThumbnail = (thumbnail: ProductThumbnail): ProductThumbnail => ({
+    bucket: normalizeString(thumbnail.bucket),
+    objectName: normalizeString(thumbnail.objectName),
+    originalName: normalizeOptionalString(thumbnail.originalName),
+    mimeType: normalizeOptionalString(thumbnail.mimeType),
+    size: thumbnail.size,
+    etag: normalizeOptionalString(thumbnail.etag),
+    url: normalizeString(thumbnail.url),
+});
 
 const validateCreatedByUser = async (userId: string) => {
     const user = await UserModel.exists({ _id: userId });
@@ -68,7 +79,7 @@ export const productService = {
             unitPrice: data.unitPrice,
             discount,
             description: normalizeOptionalString(data.description),
-            thumbnail: normalizeString(data.thumbnail),
+            thumbnail: data.thumbnail ? normalizeThumbnail(data.thumbnail) : undefined,
             category,
             createdByUser,
         });
@@ -149,7 +160,7 @@ export const productService = {
         }
 
         if (data.thumbnail !== undefined) {
-            updateData.thumbnail = normalizeString(data.thumbnail);
+            updateData.thumbnail = normalizeThumbnail(data.thumbnail);
         }
 
         if (data.category !== undefined) {

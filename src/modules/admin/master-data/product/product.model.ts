@@ -1,6 +1,16 @@
 import { Document, model, Schema, Types } from "mongoose";
 import type { StockDocument } from "../../inventory/stock/stock.model";
 
+export interface ProductThumbnail {
+    bucket: string;
+    objectName: string;
+    originalName?: string;
+    mimeType?: string;
+    size?: number;
+    etag?: string;
+    url: string;
+}
+
 export interface ProductDocument extends Document {
     code: string;
     nameEn: string;
@@ -8,13 +18,52 @@ export interface ProductDocument extends Document {
     unitPrice: number;
     discount: number;
     description?: string;
-    thumbnail?: string;
+    thumbnail?: ProductThumbnail;
     createdByUser: Types.ObjectId;
     category: Types.ObjectId;
     stock?: StockDocument | null;
     createdAt: Date;
     updatedAt: Date;
 }
+
+const productThumbnailSchema = new Schema<ProductThumbnail>(
+    {
+        bucket: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        objectName: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        originalName: {
+            type: String,
+            trim: true,
+        },
+        mimeType: {
+            type: String,
+            trim: true,
+        },
+        size: {
+            type: Number,
+            min: 0,
+        },
+        etag: {
+            type: String,
+            trim: true,
+        },
+        url: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+    },
+    {
+        _id: false,
+    },
+);
 
 const productSchema = new Schema<ProductDocument>(
     {
@@ -67,9 +116,8 @@ const productSchema = new Schema<ProductDocument>(
             trim: true,
         },
         thumbnail: {
-            type: String,
+            type: productThumbnailSchema,
             required: false,
-            trim: true,
         },
         category: {
             type: Schema.Types.ObjectId,

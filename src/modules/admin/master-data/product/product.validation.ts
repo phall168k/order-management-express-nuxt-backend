@@ -9,9 +9,27 @@ const isOptionalString = (value: unknown): value is string | undefined => (
     value === undefined || typeof value === "string"
 );
 
+const isPlainObject = (value: unknown): value is Record<string, unknown> => (
+    typeof value === "object" && value !== null && !Array.isArray(value)
+);
+
 const isNonNegativeNumber = (value: unknown): value is number => (
     typeof value === "number" && Number.isFinite(value) && value >= 0
 );
+
+const isMinioThumbnail = (value: unknown) => {
+    if (!isPlainObject(value)) {
+        return false;
+    }
+
+    return isNonEmptyString(value.bucket)
+        && isNonEmptyString(value.objectName)
+        && isNonEmptyString(value.url)
+        && (value.originalName === undefined || typeof value.originalName === "string")
+        && (value.mimeType === undefined || typeof value.mimeType === "string")
+        && (value.etag === undefined || typeof value.etag === "string")
+        && (value.size === undefined || isNonNegativeNumber(value.size));
+};
 
 export const validateCreateProduct = (
     req: Request,
@@ -42,8 +60,8 @@ export const validateCreateProduct = (
         return next(new HttpException(400, "Product description must be a string"));
     }
 
-    if (!isNonEmptyString(req.body.thumbnail)) {
-        return next(new HttpException(400, "Product thumbnail is required"));
+    if (req.body.thumbnail !== undefined && !isMinioThumbnail(req.body.thumbnail)) {
+        return next(new HttpException(400, "Product thumbnail must be a valid MinIO object"));
     }
 
     if (!isNonEmptyString(req.body.category)) {
@@ -82,8 +100,8 @@ export const validateUpdateProduct = (
         return next(new HttpException(400, "Product description must be a string"));
     }
 
-    if (req.body.thumbnail !== undefined && !isNonEmptyString(req.body.thumbnail)) {
-        return next(new HttpException(400, "Product thumbnail must be a non-empty string"));
+    if (req.body.thumbnail !== undefined && !isMinioThumbnail(req.body.thumbnail)) {
+        return next(new HttpException(400, "Product thumbnail must be a valid MinIO object"));
     }
 
     if (req.body.category !== undefined && !isNonEmptyString(req.body.category)) {
