@@ -9,11 +9,16 @@ export const loginRepository = {
             ],
         })
             .select("+password")
-            .populate({
-                path: "roles",
-                populate: {
-                    path: "permissions",
+            .populate([
+                {
+                    path: "roles",
+                    populate: {
+                        path: "permissions",
+                    },
                 },
-            });
+                {
+                    path: "userProfile",
+                },
+            ]);
     },
 };

@@ -54,6 +54,7 @@ export const loginService = {
 
         const userObject = user.toObject() as unknown as PlainObject;
         const roles = Array.isArray(userObject.roles) ? userObject.roles : [];
+        const userProfile = userObject.userProfile ?? null;
         const permissions = getPermissionNames(roles);
         const tokenPayload = {
             _id: getDocumentId(userObject),
@@ -76,6 +77,7 @@ export const loginService = {
                 createdAt: user.createdAt,
                 updatedAt: user.updatedAt,
                 roles,
+                userProfile,
                 permission: permissions,
             },
         };
