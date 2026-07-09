@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import accountRoutes from '../modules/auth/account/account.route';
 import loginRoutes from '../modules/auth/login/login.route';
 import registerRoutes from '../modules/auth/register/register.route';
 import permissionRoutes from '../modules/admin/system/permissoin/permission.route';
@@ -19,6 +20,7 @@ const router = Router();
 
 router.use('/auth/login', loginRoutes);
 router.use('/auth/register', registerRoutes);
+router.use('/auth', accountRoutes);
 router.use('/system/permissions', permissionRoutes);
 router.use('/system/roles', roleRoutes);
 router.use('/system/users', userRoutes);

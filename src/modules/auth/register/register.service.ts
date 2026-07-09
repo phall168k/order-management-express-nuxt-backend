@@ -3,6 +3,7 @@ import { Types } from "mongoose";
 import { HttpException } from "../../../common/exceptions/http.exception";
 import { jwtUtil } from "../../../common/utils/jwt.util";
 import { passwordHashUtil } from "../../../common/utils/password-hash.util";
+import { UserProfileMinioObject } from "../../admin/system/user-profile/user-profile.model";
 import { RegisterRequestDto } from "./dto/register-request.dto";
 import { registerRepository } from "./register.repository";
 
@@ -29,6 +30,16 @@ const normalizeOptionalDate = (value?: string | Date) => {
 
     return value instanceof Date ? value : new Date(value);
 };
+
+const normalizeMinioObject = (value: UserProfileMinioObject): UserProfileMinioObject => ({
+    bucket: normalizeString(value.bucket),
+    objectName: normalizeString(value.objectName),
+    originalName: normalizeOptionalString(value.originalName),
+    mimeType: normalizeOptionalString(value.mimeType),
+    size: value.size,
+    etag: normalizeOptionalString(value.etag),
+    url: normalizeString(value.url),
+});
 
 const generateCustomerProfileCode = () => (
     `CUS-${Date.now()}-${randomBytes(3).toString("hex").toUpperCase()}`
@@ -90,7 +101,7 @@ export const registerService = {
             dob: normalizeOptionalDate(data.dob),
             phoneNumber: normalizeOptionalString(data.phoneNumber),
             address: normalizeOptionalString(data.address),
-            profile: normalizeOptionalString(data.profile),
+            profile: data.profile ? normalizeMinioObject(data.profile) : undefined,
         });
 
         const user = await registerRepository.createUser({

@@ -3,6 +3,16 @@ import { Document, model, Schema, Types } from "mongoose";
 export type UserProfileUserType = "customer" | "staff";
 export type UserProfileGender = "male" | "female" | "other";
 
+export interface UserProfileMinioObject {
+    bucket: string;
+    objectName: string;
+    originalName?: string;
+    mimeType?: string;
+    size?: number;
+    etag?: string;
+    url: string;
+}
+
 export interface UserProfileDocument extends Document {
     code: string;
     userType: UserProfileUserType;
@@ -13,11 +23,50 @@ export interface UserProfileDocument extends Document {
     phoneNumber?: string;
     address?: string;
     note?: string;
-    profile?: string;
+    profile?: UserProfileMinioObject;
     createdByUser?: Types.ObjectId;
     createdAt: Date;
     updatedAt: Date;
 }
+
+const userProfileMinioObjectSchema = new Schema<UserProfileMinioObject>(
+    {
+        bucket: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        objectName: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        originalName: {
+            type: String,
+            trim: true,
+        },
+        mimeType: {
+            type: String,
+            trim: true,
+        },
+        size: {
+            type: Number,
+            min: 0,
+        },
+        etag: {
+            type: String,
+            trim: true,
+        },
+        url: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+    },
+    {
+        _id: false,
+    },
+);
 
 const userProfileSchema = new Schema<UserProfileDocument>(
     {
@@ -86,8 +135,7 @@ const userProfileSchema = new Schema<UserProfileDocument>(
             required: false,
         },
         profile: {
-            type: String,
-            trim: true,
+            type: userProfileMinioObjectSchema,
             required: false,
         },
         createdByUser: {

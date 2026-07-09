@@ -159,7 +159,7 @@ router
  */
 router
     .route("/:id")
-    .get(permissionMiddleware("user.read"), userController.findById)
+    .get(userController.findById)
     .put(permissionMiddleware("user.update"), validateUpdateUser, userController.update)
     .delete(permissionMiddleware("user.delete"), userController.delete);
 

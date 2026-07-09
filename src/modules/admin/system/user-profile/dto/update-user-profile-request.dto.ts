@@ -2,6 +2,7 @@ import {
     UserProfileGender,
     UserProfileUserType,
 } from "./create-user-profile-request.dto";
+import type { UserProfileMinioObject } from "../user-profile.model";
 
 export interface UpdateUserProfileRequestDto {
     code?: string;
@@ -13,6 +14,6 @@ export interface UpdateUserProfileRequestDto {
     phoneNumber?: string;
     address?: string;
     note?: string;
-    profile?: string;
+    profile?: UserProfileMinioObject;
     createdByUser?: string;
 }

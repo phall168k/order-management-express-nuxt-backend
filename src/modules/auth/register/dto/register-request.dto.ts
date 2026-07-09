@@ -1,4 +1,7 @@
-import { UserProfileGender } from "../../../admin/system/user-profile/user-profile.model";
+import {
+    UserProfileGender,
+    UserProfileMinioObject,
+} from "../../../admin/system/user-profile/user-profile.model";
 
 export interface RegisterRequestDto {
     username: string;
@@ -10,5 +13,5 @@ export interface RegisterRequestDto {
     dob?: string | Date;
     phoneNumber?: string;
     address?: string;
-    profile?: string;
+    profile?: UserProfileMinioObject;
 }

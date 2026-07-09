@@ -4,6 +4,7 @@ import { BasePaginationService, PaginationQueryDto } from "../../../../common/se
 import { UserModel } from "../user/user.model";
 import { CreateUserProfileRequestDto } from "./dto/create-user-profile-request.dto";
 import { UpdateUserProfileRequestDto } from "./dto/update-user-profile-request.dto";
+import { UserProfileMinioObject } from "./user-profile.model";
 import { userProfileRepository } from "./user-profile.repository";
 
 const normalizeString = (value: string) => value.trim();
@@ -25,6 +26,16 @@ const normalizeOptionalDate = (value?: string | Date) => {
 
     return value instanceof Date ? value : new Date(value);
 };
+
+const normalizeMinioObject = (value: UserProfileMinioObject): UserProfileMinioObject => ({
+    bucket: normalizeString(value.bucket),
+    objectName: normalizeString(value.objectName),
+    originalName: normalizeOptionalString(value.originalName),
+    mimeType: normalizeOptionalString(value.mimeType),
+    size: value.size,
+    etag: normalizeOptionalString(value.etag),
+    url: normalizeString(value.url),
+});
 
 const validateCreatedByUser = async (userId?: string) => {
     if (userId === undefined) {
@@ -65,7 +76,7 @@ export const userProfileService = {
             phoneNumber: normalizeOptionalString(data.phoneNumber),
             address: normalizeOptionalString(data.address),
             note: normalizeOptionalString(data.note),
-            profile: normalizeOptionalString(data.profile),
+            profile: data.profile ? normalizeMinioObject(data.profile) : undefined,
             createdByUser: await validateCreatedByUser(data.createdByUser),
         });
     },
@@ -140,7 +151,7 @@ export const userProfileService = {
         }
 
         if (data.profile !== undefined) {
-            updateData.profile = normalizeOptionalString(data.profile);
+            updateData.profile = normalizeMinioObject(data.profile);
         }
 
         if (data.createdByUser !== undefined) {

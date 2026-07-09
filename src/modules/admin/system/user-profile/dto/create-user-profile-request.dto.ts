@@ -1,3 +1,5 @@
+import type { UserProfileMinioObject } from "../user-profile.model";
+
 export type UserProfileUserType = "customer" | "staff";
 export type UserProfileGender = "male" | "female" | "other";
 
@@ -11,6 +13,6 @@ export interface CreateUserProfileRequestDto {
     phoneNumber?: string;
     address?: string;
     note?: string;
-    profile?: string;
+    profile?: UserProfileMinioObject;
     createdByUser?: string;
 }
