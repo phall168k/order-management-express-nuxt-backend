@@ -24,6 +24,7 @@ type SaleCreateData = {
 };
 
 type SaleSearchFilter = {
+    createdByUser: string;
     $or?: Array<{
         code?: { $regex: string; $options: string };
         address?: { $regex: string; $options: string };
@@ -85,6 +86,15 @@ export const saleRepository = {
         return SaleModel.findOne({ code });
     },
 
+    findLatestByCodePrefix(prefix: string) {
+        return SaleModel.findOne({
+            code: { $regex: `^${prefix}` },
+        })
+            .select("code")
+            .sort({ code: -1 })
+            .lean();
+    },
+
     findByCodeExcludeId(code: string, id: string) {
         return SaleModel.findOne({
             _id: { $ne: id },
@@ -92,8 +102,8 @@ export const saleRepository = {
         });
     },
 
-    async findAll(query: NormalizedPagination) {
-        const filter: SaleSearchFilter = {};
+    async findAll(query: NormalizedPagination, createdByUser: string) {
+        const filter: SaleSearchFilter = { createdByUser };
 
         if (query.search) {
             filter.$or = [

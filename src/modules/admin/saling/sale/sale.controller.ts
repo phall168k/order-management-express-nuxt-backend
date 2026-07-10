@@ -31,7 +31,7 @@ export const saleController = {
     },
 
     async findAll(req: Request<object, object, object, PaginationQueryDto>, res: Response) {
-        const sales = await saleService.findAll(req.query);
+        const sales = await saleService.findAll(req.query, getAuthUserId(req.user?._id));
 
         return res.status(200).json({
             success: true,

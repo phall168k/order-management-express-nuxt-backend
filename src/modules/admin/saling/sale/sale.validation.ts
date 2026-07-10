@@ -71,10 +71,6 @@ export const validateCreateSale = (
     next: NextFunction,
 ) => {
     try {
-        if (!isNonEmptyString(req.body.code)) {
-            return next(new HttpException(400, "Sale code is required"));
-        }
-
         if (!isNonEmptyString(req.body.customer)) {
             return next(new HttpException(400, "Customer is required"));
         }

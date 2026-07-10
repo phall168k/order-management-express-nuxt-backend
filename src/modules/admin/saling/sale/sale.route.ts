@@ -55,7 +55,7 @@ router.use(authMiddleware);
 router
     .route("/")
     .get(permissionMiddleware("sale.read"), saleController.findAll)
-    .post(permissionMiddleware("sale.create"), validateCreateSale, saleController.create);
+    .post(validateCreateSale, saleController.create);
 
 /**
  * @swagger

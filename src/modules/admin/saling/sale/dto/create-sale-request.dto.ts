@@ -9,7 +9,6 @@ export interface CreateSaleItemRequestDto {
 }
 
 export interface CreateSaleRequestDto {
-    code: string;
     customer: string;
     salingDate: string;
     status: SaleStatus;

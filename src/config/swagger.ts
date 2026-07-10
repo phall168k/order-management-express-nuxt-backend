@@ -1376,12 +1376,8 @@ export const swaggerSpec = swaggerJsdoc({
                 },
                 CreateSaleRequest: {
                     type: "object",
-                    required: ["code", "customer", "salingDate", "status", "paymentMethod", "address", "items"],
+                    required: ["customer", "salingDate", "status", "paymentMethod", "address", "items"],
                     properties: {
-                        code: {
-                            type: "string",
-                            example: "SALE-001",
-                        },
                         customer: {
                             type: "string",
                             example: "65f1a9f2c1a3a7d9f3b99999",

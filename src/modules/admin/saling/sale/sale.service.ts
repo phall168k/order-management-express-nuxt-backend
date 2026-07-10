@@ -26,6 +26,22 @@ const normalizeOptionalString = (value?: string) => {
 
 const normalizeDate = (value: string) => new Date(value);
 
+const getCodePrefix = () => {
+    const year = new Date().getFullYear().toString().slice(-2);
+
+    return `SAL${year}`;
+};
+
+const getNextCode = async () => {
+    const prefix = getCodePrefix();
+    const latestSale = await saleRepository.findLatestByCodePrefix(prefix);
+    const latestSequence = latestSale?.code.startsWith(prefix)
+        ? Number(latestSale.code.slice(prefix.length))
+        : 0;
+
+    return `${prefix}${String(latestSequence + 1).padStart(5, "0")}`;
+};
+
 const validateUser = async (userId: string, message: string) => {
     if (!Types.ObjectId.isValid(userId)) {
         throw new HttpException(400, `Invalid ${message.toLowerCase()}`);
@@ -126,19 +142,14 @@ export const saleService = {
     async create(data: CreateSaleRequestDto, createdByUser: string) {
         await validateUser(createdByUser, "Created by user");
 
-        const code = normalizeString(data.code);
         const customer = normalizeString(data.customer);
         const paymentMethod = normalizeString(data.paymentMethod);
-        const existingSale = await saleRepository.findByCode(code);
-
-        if (existingSale) {
-            throw new HttpException(409, "Sale code already exists");
-        }
 
         await validateUser(customer, "Customer");
         await validatePaymentMethod(paymentMethod);
         await validateItemProducts(data.items);
         const items = normalizeItems(data.items);
+        const code = await getNextCode();
 
         const sale = await saleRepository.create({
             code,
@@ -157,9 +168,9 @@ export const saleService = {
         return sale;
     },
 
-    async findAll(query: PaginationQueryDto) {
+    async findAll(query: PaginationQueryDto, createdByUser: string) {
         const pagination = BasePaginationService.normalize(query);
-        const { data, total } = await saleRepository.findAll(pagination);
+        const { data, total } = await saleRepository.findAll(pagination, createdByUser);
 
         return BasePaginationService.paginate(data, total, pagination);
     },
