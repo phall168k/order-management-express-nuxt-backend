@@ -10,6 +10,7 @@ const roleSeeds = [
     {
         name: "admin",
         permissions: [
+            "dashboard.read",
             "permission.read",
             "role.read",
             "user.create",
@@ -52,6 +53,7 @@ const roleSeeds = [
     {
         name: "manager",
         permissions: [
+            "dashboard.read",
             "permission.read",
             "role.read",
             "user.read",

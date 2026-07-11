@@ -2,6 +2,7 @@ import { Types } from "mongoose";
 import { PermissionModel } from "../../modules/admin/system/permissoin/permission.model";
 
 export const permissionNames = [
+    "dashboard.read",
     "permission.create",
     "permission.read",
     "permission.update",
