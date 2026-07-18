@@ -1,20 +1,65 @@
 services:
+  api:
+    build:
+      context: .
+      target: development
+    restart: unless-stopped
+    init: true
+    ports:
+      - "${PORT:-8000}:8000"
+    environment:
+      PORT: 8000
+      NODE_ENV: development
+      MONGO_URI: mongodb://admin:123456@mongodb:27017/express_learning?authSource=admin
+      JWT_SECRET: ${JWT_SECRET:-change-this-secret-in-production}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-1d}
+      MINIO_ENDPOINT: minio
+      MINIO_PORT: 9000
+      MINIO_USE_SSL: "false"
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY:-minioadmin}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY:-minioadmin}
+      MINIO_BUCKET: ${MINIO_BUCKET:-order-management}
+      MINIO_REGION: ${MINIO_REGION:-us-east-1}
+      MINIO_MAX_FILE_SIZE_MB: ${MINIO_MAX_FILE_SIZE_MB:-20}
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      minio:
+        condition: service_started
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - fetch('http://localhost:8000/api-docs/').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
   mongodb:
     image: mongo:8
-    container_name: mongodb
-    restart: always
+    restart: unless-stopped
     ports:
-      - "27017:27017"
+      - "${MONGO_PORT:-27017}:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: 123456
     volumes:
       - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--username", "admin", "--password", "123456", "--authenticationDatabase", "admin", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   minio:
     image: minio/minio:latest
-    container_name: order_minio
-    restart: always
+    restart: unless-stopped
     command: server /data --console-address ":9001"
     ports:
       - "9000:9000"
@@ -26,5 +71,6 @@ services:
       - minio_data:/data
 
 volumes:
+  node_modules:
   mongo_data:
   minio_data:
