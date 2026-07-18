@@ -704,6 +704,44 @@ export const swaggerSpec = swaggerJsdoc({
                         },
                     },
                 },
+                Notification: {
+                    type: "object",
+                    properties: {
+                        _id: { type: "string" },
+                        title: { type: "string", example: "New order" },
+                        subject: { type: "string", example: "Order #SO-001 was created" },
+                        sender: { $ref: "#/components/schemas/User" },
+                        reciever: { $ref: "#/components/schemas/User" },
+                        notificationType: { $ref: "#/components/schemas/NotificationType" },
+                        link: { type: "string", example: "/orders/SO-001" },
+                        isSeen: { type: "boolean", example: false },
+                        createdAt: { type: "string", format: "date-time" },
+                        updatedAt: { type: "string", format: "date-time" },
+                    },
+                },
+                CreateNotificationRequest: {
+                    type: "object",
+                    required: ["title", "subject", "reciever", "notificationType", "link"],
+                    properties: {
+                        title: { type: "string", example: "New order" },
+                        subject: { type: "string", example: "Order #SO-001 was created" },
+                        reciever: { type: "string", example: "65f1a9f2c1a3a7d9f3b99999" },
+                        notificationType: { type: "string", example: "65f1a9f2c1a3a7d9f3b44444" },
+                        link: { type: "string", example: "/orders/SO-001" },
+                        isSeen: { type: "boolean", default: false },
+                    },
+                },
+                UpdateNotificationRequest: {
+                    type: "object",
+                    properties: {
+                        title: { type: "string" },
+                        subject: { type: "string" },
+                        reciever: { type: "string" },
+                        notificationType: { type: "string" },
+                        link: { type: "string" },
+                        isSeen: { type: "boolean" },
+                    },
+                },
                 NotificationType: {
                     type: "object",
                     properties: {

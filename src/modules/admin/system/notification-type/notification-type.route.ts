@@ -36,6 +36,18 @@ router.route("/")
     .get(permissionMiddleware("notification-type.read"), notificationTypeController.findAll)
     .post(permissionMiddleware("notification-type.create"), validateCreateNotificationType, notificationTypeController.create);
 
+/**
+ * @swagger
+ * /system/notification-types/select-options:
+ *   get:
+ *     summary: Get notification type select options
+ *     tags: [Notification Types]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Notification type select options fetched successfully
+ */
 router.get("/select-options", notificationTypeController.findSelectOptions);
 
 /**
