@@ -704,6 +704,61 @@ export const swaggerSpec = swaggerJsdoc({
                         },
                     },
                 },
+                NotificationType: {
+                    type: "object",
+                    properties: {
+                        _id: {
+                            type: "string",
+                            example: "65f1a9f2c1a3a7d9f3b44444",
+                        },
+                        name: {
+                            type: "string",
+                            example: "New order",
+                        },
+                        icon: {
+                            type: "string",
+                            example: "shopping-cart",
+                        },
+                        createdByUser: {
+                            $ref: "#/components/schemas/User",
+                        },
+                        createdAt: {
+                            type: "string",
+                            format: "date-time",
+                        },
+                        updatedAt: {
+                            type: "string",
+                            format: "date-time",
+                        },
+                    },
+                },
+                CreateNotificationTypeRequest: {
+                    type: "object",
+                    required: ["name", "icon"],
+                    properties: {
+                        name: {
+                            type: "string",
+                            example: "New order",
+                        },
+                        icon: {
+                            type: "string",
+                            example: "shopping-cart",
+                        },
+                    },
+                },
+                UpdateNotificationTypeRequest: {
+                    type: "object",
+                    properties: {
+                        name: {
+                            type: "string",
+                            example: "Order received",
+                        },
+                        icon: {
+                            type: "string",
+                            example: "bell",
+                        },
+                    },
+                },
                 Category: {
                     type: "object",
                     properties: {
